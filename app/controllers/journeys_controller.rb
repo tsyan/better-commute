@@ -20,8 +20,6 @@ class JourneysController < ApplicationController
 
 	end
 
-
-
 	private
 
 	def journey_params
