@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.2'
 gem 'pg'
 gem 'httparty'
+gem 'chronic'
 
 group :development do
 	gem 'pry'
