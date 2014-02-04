@@ -2,7 +2,7 @@
 
 <p>From: <%= @journey.origin %></p>
 <p>To: <%= @journey.destination %></p>
-<p>Arriving By: <%= @journey.time_must_arrive_by %></p>
+<p>Arriving By: <%= @journey.time_must_arrive_by.strftime("%A, %b %-d at %l:%M%P") %></p>
 <p>On Date: <%= @journey.day_of_travel %></p>
 
 <h2>Route Options</h2>
