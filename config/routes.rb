@@ -7,3 +7,5 @@ BetterCommute::Application.routes.draw do
   end
 
   root 'journeys#new'
+
+end
