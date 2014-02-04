@@ -23,7 +23,7 @@ class JourneysController < ApplicationController
 	private
 
 	def journey_params
-		params.require(:journey).permit(:name, :user_id, :origin, :destination, :time_must_arrive_by, :day_of_travel)
+		params.require(:journey).permit(:name, :user_id, :origin, :destination, :time_must_arrive_by_string, :day_of_travel)
 	end
 
 end

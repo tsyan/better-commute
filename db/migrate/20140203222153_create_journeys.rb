@@ -4,7 +4,7 @@ class CreateJourneys < ActiveRecord::Migration
       t.text :name
       t.text :origin
       t.text :destination
-      t.time :time_must_arrive_by
+      t.datetime :time_must_arrive_by
       t.references :user, index: true
 
       t.timestamps

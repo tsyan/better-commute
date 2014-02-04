@@ -9,7 +9,7 @@ class Journey < ActiveRecord::Base
 	end
 
 	def time_must_arrive_by_string=(user_input)
-		self.time_must_arrive_by = Chronic.parse(user_input.to_s)
+		self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
 	end
 
 	# # getter
