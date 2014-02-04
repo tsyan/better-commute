@@ -1,3 +1,3 @@
 class Route < ActiveRecord::Base
-	belongs_to: journey
+	belongs_to :journey
 end
