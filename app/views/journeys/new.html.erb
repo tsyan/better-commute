@@ -1,0 +1,24 @@
+<br>
+<h2>Create a New Journey</h2>
+
+	<%= form_for @journey do |f| %>
+		<p><%= f.label :name, "Name: " %>
+		<%= f.text_field :name, placeholder: "Give your journey a name" %></p>
+		<br>
+
+<h3>Where To?</h3>
+		<p><%= f.label :origin, "From: " %>
+		<%= f.text_field :origin, placeholder: "Starting Point (A)" %>
+		<%= f.label :destination, "To: " %>
+		<%= f.text_field :destination, placeholder: "Ending Point (B)" %></p>
+		<br>
+
+<h3>By What Time?</h3>
+		<p><%= f.label :time_must_arrive_by, "Must Arrive By: " %>
+		<%= f.text_field :time_must_arrive_by, placeholder: "9am" %></p>
+		<br>
+		<p><%= f.submit %></p>
+	<% end %>
+
+
+
