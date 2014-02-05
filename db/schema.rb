@@ -18,7 +18,8 @@ ActiveRecord::Schema.define(version: 20140203222459) do
 
   create_table "journeys", force: true do |t|
     t.text     "name"
-    t.text     "origin"
+    t.text     "origin_address"
+    t.text     "origin_coordinates"
     t.text     "destination"
     t.datetime "time_must_arrive_by"
     t.integer  "user_id"
