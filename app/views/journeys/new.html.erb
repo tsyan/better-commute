@@ -13,14 +13,9 @@
 		<%= f.text_field :destination, placeholder: "Ending Point (B)" %></p>
 		<br>
 
-<h3>By What Time?</h3>
+<h3>By When?</h3>
 		<p><%= f.label :time_must_arrive_by_string, "Must Arrive By: " %>
-		<%= f.text_field :time_must_arrive_by_string, placeholder: "9am" %></p>
-		<br>
-
-<h3>On What Date?</h3>
-		<p><%= f.label :day_of_travel, "Travel Date: " %>
-		<%= f.text_field :day_of_travel, placeholder: "Tuesday 2/4" %></p>
+		<%= f.text_field :time_must_arrive_by_string, placeholder: "e.g. Tuesday 9am" %></p>
 		<br>
 
 		<p><%= f.submit %></p>
