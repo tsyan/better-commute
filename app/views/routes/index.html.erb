@@ -4,10 +4,34 @@
 <p>To: <%= @journey.destination_address %> (located at <%= @journey.destination_coordinates %>)</p>
 <p>Arriving By: <%= @journey.time_must_arrive_by.strftime("%l:%M%P on %A, %b %-d") %></p>
 
-<h2>Routes</h2>
+<h2>Route Options</h2>
 
 <p><strong>Route 1:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Travel Time: <%= @route_1.travel_time %> mins &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_1.departure_time.strftime("%l:%M%P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Arrive: <%= @route_1.arrival_time.strftime("%l:%M%P") %>
+</p>
+
+<p><strong>Route 2:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_2.travel_time %> mins &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Depart: <%= @route_2.departure_time.strftime("%l:%M%P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Arrive: <%= @route_2.arrival_time.strftime("%l:%M%P") %>
+</p>
+
+<p><strong>Route 3:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_3.travel_time %> mins &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Depart: <%= @route_3.departure_time.strftime("%l:%M%P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Arrive: <%= @route_3.arrival_time.strftime("%l:%M%P") %>
+</p>
+
+<p><strong>Route 4:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_4.travel_time %> mins &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Depart: <%= @route_4.departure_time.strftime("%l:%M%P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Arrive: <%= @route_4.arrival_time.strftime("%l:%M%P") %>
+</p>
+
+<p><strong>Route 5:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_5.travel_time %> mins &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Depart: <%= @route_5.departure_time.strftime("%l:%M%P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Arrive: <%= @route_5.arrival_time.strftime("%l:%M%P") %>
 </p>

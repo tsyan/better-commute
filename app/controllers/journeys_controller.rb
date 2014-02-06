@@ -31,11 +31,35 @@ class JourneysController < ApplicationController
 		departure_time_1 = travel_times_response[0]["departureTime"]
 		arrival_time_1 = Time.parse(departure_time_1).localtime + 60*travel_time_1.to_i
 
-		# save the route
+		travel_time_2 = travel_times_response[1]["travelTimeMinutes"]
+		departure_time_2 = travel_times_response[1]["departureTime"]
+		arrival_time_2 = Time.parse(departure_time_2).localtime + 60*travel_time_2.to_i
+
+		travel_time_3 = travel_times_response[2]["travelTimeMinutes"]
+		departure_time_3 = travel_times_response[2]["departureTime"]
+		arrival_time_3 = Time.parse(departure_time_3).localtime + 60*travel_time_3.to_i
+
+		travel_time_4 = travel_times_response[3]["travelTimeMinutes"]
+		departure_time_4 = travel_times_response[3]["departureTime"]
+		arrival_time_4 = Time.parse(departure_time_4).localtime + 60*travel_time_4.to_i
+
+		travel_time_5 = travel_times_response[4]["travelTimeMinutes"]
+		departure_time_5 = travel_times_response[4]["departureTime"]
+		arrival_time_5 = Time.parse(departure_time_5).localtime + 60*travel_time_5.to_i
+
+		# save the routes
 
 		@route_1 = @journey.routes.create(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, journey_id: @journey.id)
 
-		if @route_1.save
+		@route_2 = @journey.routes.create(departure_time: departure_time_2, arrival_time: arrival_time_2, travel_time: travel_time_2, journey_id: @journey.id)
+
+		@route_3 = @journey.routes.create(departure_time: departure_time_3, arrival_time: arrival_time_3, travel_time: travel_time_3, journey_id: @journey.id)
+
+		@route_4 = @journey.routes.create(departure_time: departure_time_4, arrival_time: arrival_time_4, travel_time: travel_time_4, journey_id: @journey.id)
+
+		@route_5 = @journey.routes.create(departure_time: departure_time_5, arrival_time: arrival_time_5, travel_time: travel_time_5, journey_id: @journey.id)
+
+		if @route_1.save && @route_2.save && @route_3.save && @route_4.save && @route_5.save
   		redirect_to journey_routes_path(@journey)
   	else
   		render :new
