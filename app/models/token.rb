@@ -40,15 +40,3 @@ class Token
 
 end
 
-
-token = Token.new # call this wherever i need it in my code
-puts token.value
-puts token.valid?
-puts token.api_server
-puts token.tiles_server
-
-# # url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=42.381933,-71.096044&wp_2=42.381933,-71.096044&wp_1description=Bellevue&wp_2description=Seattle"
-# # puts url
-
-# # puts HTTParty.get(url)
-
