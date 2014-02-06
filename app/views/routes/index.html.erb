@@ -2,54 +2,62 @@
 
 <p>From: <%= @journey.origin_string %> (located at <%= @journey.origin_coordinates %>)</p>
 <p>To: <%= @journey.destination_address %> (located at <%= @journey.destination_coordinates %>)</p>
-<p>Arriving By: <%= @journey.time_must_arrive_by.strftime("%l:%M %P on %A, %b %-d") %></p>
+<p>Arriving By: <%= @journey.time_must_arrive_by.localtime.strftime("%l:%M %P on %A, %b %-d") %></p>
 
-<h2>Route Options</h2>
+<h2>Departures</h2>
 
-<p><strong>Route 1:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_1.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 1:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_1.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_1.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_1.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_1.travel_time %> min
 </p>
 
-<p><strong>Route 2:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_2.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 2:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_2.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_2.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_2.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_2.travel_time %> min
 </p>
 
-<p><strong>Route 3:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_3.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 3:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_3.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_3.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_3.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_3.travel_time %> min
 </p>
 
-<p><strong>Route 4:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_4.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 4:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_4.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_4.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_4.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_4.travel_time %> min
 </p>
 
-<p><strong>Route 5:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_5.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 5:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_5.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_5.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_5.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_5.travel_time %> min
 </p>
 
-<p><strong>Route 6:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_6.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 6:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_6.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_6.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_6.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_6.travel_time %> min
 </p>
 
-<p><strong>Route 7:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_7.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 7:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_7.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_7.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_7.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_7.travel_time %> min
 </p>
 
-<p><strong>Route 8:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Travel Time: <%= @route_8.travel_time %> min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p><strong>Option 8:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_8.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Arrive: <%= @route_8.arrival_time.strftime("%l:%M %P") %>
+	Arrive: <%= @route_8.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_8.travel_time %> min
 </p>
+
+<h2>Driving Directions</h2>
+
+<ul>
+	<% @route_1.directions.each do |step| %>
+		<li><%= step %></li>
+	<% end %>
+</ul>

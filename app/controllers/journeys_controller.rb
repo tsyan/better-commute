@@ -9,14 +9,18 @@ class JourneysController < ApplicationController
 		@journey = Journey.new(journey_params)
 		@journey.save
 
-		token = Token.new # later this should say if token.valid? continue, else get a new token
+		token = Token.new
 
 		# FindRoute
 
-		find_route_url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=#{@journey.origin_coordinates}&wp_2=#{@journey.destination_coordinates}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&UseTraffic=false" # may need Time.parse?
+		find_route_url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=#{@journey.origin_coordinates}&wp_2=#{@journey.destination_coordinates}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&UseTraffic=false"
 		find_route_response = HTTParty.get(URI.encode(find_route_url))["Inrix"]["Trip"]
 
 		find_route_id = find_route_response["Route"]["id"]
+
+		directions = find_route_response["Route"]["Maneuvers"]["Maneuver"].map do |turn| # this is an array
+  		turn["text"].squish
+		end
 
 		# calculate last_departure_travel_time
 
@@ -29,7 +33,7 @@ class JourneysController < ApplicationController
 
 		count = 8
 		interval = 15
-		first_departure_time = (@journey.time_must_arrive_by - 60*last_departure_travel_time) - ((count-1) * 60*interval) # may need Time.parse?
+		first_departure_time = (@journey.time_must_arrive_by - 60*last_departure_travel_time) - ((count-1) * 60*interval)
 
 		travel_times_url = "#{token.api_server}?Action=GetRouteTravelTimes&Token=#{token.value}&RouteID=#{find_route_id}&DepartureTime=#{first_departure_time.iso8601}&TravelTimeCount=#{count}&TravelTimeInterval=#{interval}"
 		travel_times_response = HTTParty.get(URI.encode(travel_times_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
@@ -68,7 +72,8 @@ class JourneysController < ApplicationController
 
 		# save the routes
 
-		@route_1 = @journey.routes.create(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, journey_id: @journey.id)
+		# only the first route has saved directions, but the directions are the same for all routes
+		@route_1 = @journey.routes.create(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, directions: directions, journey_id: @journey.id)
 
 		@route_2 = @journey.routes.create(departure_time: departure_time_2, arrival_time: arrival_time_2, travel_time: travel_time_2, journey_id: @journey.id)
 
