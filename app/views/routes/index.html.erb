@@ -6,4 +6,8 @@
 
 <h2>Routes</h2>
 
-<p><strong>Route 1  </strong>Travel Time: <%= @route_1.travel_time %> minutes!</p>
+<p><strong>Route 1:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Travel Time: <%= @route_1.travel_time %> mins &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Depart: <%= @route_1.departure_time.strftime("%l:%M%P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Arrive: <%= @route_1.arrival_time.strftime("%l:%M%P") %>
+</p>
