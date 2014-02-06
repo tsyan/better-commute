@@ -7,24 +7,31 @@ class JourneysController < ApplicationController
 	def create
 		# @user = User.new("Test") # later this should be an if-else-end statement, if user is logged in then set @user as User.find(id)
 		@journey = Journey.new(journey_params)
-
-		# create the different routes here
-		# first I will create one route
-
 		@journey.save
 
 		token = Token.new # later this should say if token.valid? continue, else get a new token
 
 		# FindRoute
 
-		find_route_url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=#{@journey.origin_coordinates}&wp_2=#{@journey.destination_coordinates}&wp_1description=#{@journey.origin_address}&wp_2description=#{@journey.destination_address}&DepartureTime=2014-02-07T08:00:00-05:00&UseTraffic=true"
+		find_route_url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=#{@journey.origin_coordinates}&wp_2=#{@journey.destination_coordinates}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&UseTraffic=false" # may need Time.parse?
 		find_route_response = HTTParty.get(URI.encode(find_route_url))["Inrix"]["Trip"]
 
 		find_route_id = find_route_response["Route"]["id"]
 
-		# GetRouteTravelTimes
+		# calculate last_departure_travel_time
 
-		travel_times_url = "#{token.api_server}?Action=GetRouteTravelTimes&Token=#{token.value}&RouteID=#{find_route_id}&DepartureTime=2014-02-07T08:00:00-05:00&TravelTimeCount=6&TravelTimeInterval=5"
+		departure_url = "#{token.api_server}?Action=GetRouteTravelTimes&Token=#{token.value}&RouteID=#{find_route_id}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&TravelTimeCount=1&TravelTimeInterval=1"
+		departure_response = HTTParty.get(URI.encode(departure_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
+
+		last_departure_travel_time = departure_response["travelTimeMinutes"].to_i
+
+		# GetRouteTravelTimes # later these should be stored in the database for faster access... or does it make a difference?
+
+		count = 8
+		interval = 15
+		first_departure_time = (@journey.time_must_arrive_by - 60*last_departure_travel_time) - ((count-1) * 60*interval) # may need Time.parse?
+
+		travel_times_url = "#{token.api_server}?Action=GetRouteTravelTimes&Token=#{token.value}&RouteID=#{find_route_id}&DepartureTime=#{first_departure_time.iso8601}&TravelTimeCount=#{count}&TravelTimeInterval=#{interval}"
 		travel_times_response = HTTParty.get(URI.encode(travel_times_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
 
 		travel_time_1 = travel_times_response[0]["travelTimeMinutes"]
@@ -47,6 +54,18 @@ class JourneysController < ApplicationController
 		departure_time_5 = travel_times_response[4]["departureTime"]
 		arrival_time_5 = Time.parse(departure_time_5).localtime + 60*travel_time_5.to_i
 
+		travel_time_6 = travel_times_response[5]["travelTimeMinutes"]
+		departure_time_6 = travel_times_response[5]["departureTime"]
+		arrival_time_6 = Time.parse(departure_time_6).localtime + 60*travel_time_6.to_i
+
+		travel_time_7 = travel_times_response[6]["travelTimeMinutes"]
+		departure_time_7 = travel_times_response[6]["departureTime"]
+		arrival_time_7 = Time.parse(departure_time_7).localtime + 60*travel_time_7.to_i
+
+		travel_time_8 = travel_times_response[7]["travelTimeMinutes"]
+		departure_time_8 = travel_times_response[7]["departureTime"]
+		arrival_time_8 = Time.parse(departure_time_8).localtime + 60*travel_time_8.to_i
+
 		# save the routes
 
 		@route_1 = @journey.routes.create(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, journey_id: @journey.id)
@@ -59,7 +78,14 @@ class JourneysController < ApplicationController
 
 		@route_5 = @journey.routes.create(departure_time: departure_time_5, arrival_time: arrival_time_5, travel_time: travel_time_5, journey_id: @journey.id)
 
-		if @route_1.save && @route_2.save && @route_3.save && @route_4.save && @route_5.save
+		@route_6 = @journey.routes.create(departure_time: departure_time_6, arrival_time: arrival_time_6, travel_time: travel_time_6, journey_id: @journey.id)
+
+		@route_7 = @journey.routes.create(departure_time: departure_time_7, arrival_time: arrival_time_7, travel_time: travel_time_7, journey_id: @journey.id)
+
+		@route_8 = @journey.routes.create(departure_time: departure_time_8, arrival_time: arrival_time_8, travel_time: travel_time_8, journey_id: @journey.id)
+
+		# maybe these are already being saved because of .create above?
+		if @route_1.save && @route_2.save && @route_3.save && @route_4.save && @route_5.save && @route_6.save && @route_7.save && @route_8.save
   		redirect_to journey_routes_path(@journey)
   	else
   		render :new
