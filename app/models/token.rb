@@ -1,10 +1,13 @@
+require 'httparty'
+
 class Token
   include HTTParty
 
   # attr_reader :token # not necessary because i will never call .token on an instance of this class
 
   def initialize
-  	token_server = "http://api.sandbox.inrix.com/v3/Traffic/Inrix.ashx"
+  	token_server = "http://api.inrix.com/Traffic/Inrix.ashx"
+
   	vendor_id = ENV["VENDOR_ID"]
   	consumer_id = ENV["CONSUMER_ID"]
 
@@ -38,11 +41,11 @@ class Token
 end
 
 
-# token = Token.new # call this wherever i need it in my code
-# puts token.value
-# puts token.valid?
-# puts token.api_server
-# puts token.tiles_server
+token = Token.new # call this wherever i need it in my code
+puts token.value
+puts token.valid?
+puts token.api_server
+puts token.tiles_server
 
 # # url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=42.381933,-71.096044&wp_2=42.381933,-71.096044&wp_1description=Bellevue&wp_2description=Seattle"
 # # puts url
