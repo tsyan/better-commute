@@ -25,11 +25,12 @@ class JourneysController < ApplicationController
 		# calculate last_departure_travel_time
 
 		departure_url = "#{token.api_server}?Action=GetRouteTravelTimes&Token=#{token.value}&RouteID=#{find_route_id}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&TravelTimeCount=1&TravelTimeInterval=1"
+
 		departure_response = HTTParty.get(URI.encode(departure_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
 
 		last_departure_travel_time = departure_response["travelTimeMinutes"].to_i
 
-		# GetRouteTravelTimes # later these should be stored in the database for faster access... or does it make a difference?
+		# GetRouteTravelTimes
 
 		count = 8
 		interval = 15
@@ -73,23 +74,22 @@ class JourneysController < ApplicationController
 		# save the routes
 
 		# only the first route has saved directions, but the directions are the same for all routes
-		@route_1 = @journey.routes.create(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, directions: directions, journey_id: @journey.id)
+		@route_1 = @journey.routes.new(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, directions: directions, journey_id: @journey.id)
 
-		@route_2 = @journey.routes.create(departure_time: departure_time_2, arrival_time: arrival_time_2, travel_time: travel_time_2, journey_id: @journey.id)
+		@route_2 = @journey.routes.new(departure_time: departure_time_2, arrival_time: arrival_time_2, travel_time: travel_time_2, journey_id: @journey.id)
 
-		@route_3 = @journey.routes.create(departure_time: departure_time_3, arrival_time: arrival_time_3, travel_time: travel_time_3, journey_id: @journey.id)
+		@route_3 = @journey.routes.new(departure_time: departure_time_3, arrival_time: arrival_time_3, travel_time: travel_time_3, journey_id: @journey.id)
 
-		@route_4 = @journey.routes.create(departure_time: departure_time_4, arrival_time: arrival_time_4, travel_time: travel_time_4, journey_id: @journey.id)
+		@route_4 = @journey.routes.new(departure_time: departure_time_4, arrival_time: arrival_time_4, travel_time: travel_time_4, journey_id: @journey.id)
 
-		@route_5 = @journey.routes.create(departure_time: departure_time_5, arrival_time: arrival_time_5, travel_time: travel_time_5, journey_id: @journey.id)
+		@route_5 = @journey.routes.new(departure_time: departure_time_5, arrival_time: arrival_time_5, travel_time: travel_time_5, journey_id: @journey.id)
 
-		@route_6 = @journey.routes.create(departure_time: departure_time_6, arrival_time: arrival_time_6, travel_time: travel_time_6, journey_id: @journey.id)
+		@route_6 = @journey.routes.new(departure_time: departure_time_6, arrival_time: arrival_time_6, travel_time: travel_time_6, journey_id: @journey.id)
 
-		@route_7 = @journey.routes.create(departure_time: departure_time_7, arrival_time: arrival_time_7, travel_time: travel_time_7, journey_id: @journey.id)
+		@route_7 = @journey.routes.new(departure_time: departure_time_7, arrival_time: arrival_time_7, travel_time: travel_time_7, journey_id: @journey.id)
 
-		@route_8 = @journey.routes.create(departure_time: departure_time_8, arrival_time: arrival_time_8, travel_time: travel_time_8, journey_id: @journey.id)
+		@route_8 = @journey.routes.new(departure_time: departure_time_8, arrival_time: arrival_time_8, travel_time: travel_time_8, journey_id: @journey.id)
 
-		# maybe these are already being saved because of .create above?
 		if @route_1.save && @route_2.save && @route_3.save && @route_4.save && @route_5.save && @route_6.save && @route_7.save && @route_8.save
   		redirect_to journey_routes_path(@journey)
   	else

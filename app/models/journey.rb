@@ -13,13 +13,17 @@ class Journey < ActiveRecord::Base
 	def origin_string=(user_input)
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
-		lat = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lat"].to_s
-		lon = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lng"].to_s
+		origin_geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
+			HTTParty.get(URI.encode(search_url))["results"][0]
+		end
 
-		# origin_coordinates MUST exist in the database
+		lat = origin_geocode["geometry"]["location"]["lat"].to_s
+		lon = origin_geocode["geometry"]["location"]["lng"].to_s
+
+			# origin_coordinates MUST exist in the database
 		self.origin_coordinates = lat + "," + lon
 
-		formatted_address = HTTParty.get(URI.encode(search_url))["results"][0]["formatted_address"].chomp!(", USA")
+		formatted_address = origin_geocode["formatted_address"].chomp!(", USA")
 
 		# origin_address MUST exist in the database
 		self.origin_address = formatted_address
@@ -34,13 +38,17 @@ class Journey < ActiveRecord::Base
 	def destination_string=(user_input)
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
-		lat = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lat"].to_s
-		lon = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lng"].to_s
+		destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
+			HTTParty.get(URI.encode(search_url))["results"][0]
+		end
+
+		lat = destination_geocode["geometry"]["location"]["lat"].to_s
+		lon = destination_geocode["geometry"]["location"]["lng"].to_s
 
 		# destination_coordinates MUST exist in the database
 		self.destination_coordinates = lat + "," + lon
 
-		formatted_address = HTTParty.get(URI.encode(search_url))["results"][0]["formatted_address"].chomp!(", USA")
+		formatted_address = destination_geocode["formatted_address"].chomp!(", USA")
 
 		# destination_address MUST exist in the databaseh
 		self.destination_address = formatted_address
