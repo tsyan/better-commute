@@ -7,22 +7,14 @@ class JourneysController < ApplicationController
 	def create
 		# @user = User.new("Test") # later this should be an if-else-end statement, if user is logged in then set @user as User.find(id)
 		@journey = Journey.new(journey_params)
+
 		@journey.save
 
 		token = Token.new
 
-		# FindRoute
+		find_route_id, directions = find_route(token)
 
-		find_route_url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=#{@journey.origin_coordinates}&wp_2=#{@journey.destination_coordinates}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&UseTraffic=false"
-		find_route_response = HTTParty.get(URI.encode(find_route_url))["Inrix"]["Trip"]
-
-		find_route_id = find_route_response["Route"]["id"]
-
-		directions = find_route_response["Route"]["Maneuvers"]["Maneuver"].map do |turn| # directions is an array
-  		turn["text"].squish.gsub(/go .+ for /, 'go ') # make directions easier to read
-		end
-
-		# calculate last_departure_travel_time
+		# GetRouteTravelTimes - calculates first_departure_time to be used in GetRouteTravelTimes
 
 		departure_url = "#{token.api_server}?Action=GetRouteTravelTimes&Token=#{token.value}&RouteID=#{find_route_id}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&TravelTimeCount=1&TravelTimeInterval=1"
 
@@ -30,7 +22,7 @@ class JourneysController < ApplicationController
 
 		last_departure_travel_time = departure_response["travelTimeMinutes"].to_i
 
-		# GetRouteTravelTimes
+		# GetRouteTravelTimes - calculates travel times starting at first_departure_time
 
 		count = 8
 		interval = 15
@@ -71,7 +63,7 @@ class JourneysController < ApplicationController
 		departure_time_8 = travel_times_response[7]["departureTime"]
 		arrival_time_8 = Time.parse(departure_time_8).localtime + 60*travel_time_8.to_i
 
-		# save the routes
+		# save the routes to the database
 
 		# only the first route has saved directions, but the directions are the same for all routes
 		@route_1 = @journey.routes.new(departure_time: departure_time_1, arrival_time: arrival_time_1, travel_time: travel_time_1, directions: directions, journey_id: @journey.id)
@@ -105,6 +97,23 @@ class JourneysController < ApplicationController
 
 	def journey_params
 		params.require(:journey).permit(:name, :user_id, :origin_string, :destination_string, :time_must_arrive_by_string)
+	end
+
+	def find_route(token)
+		# FindRoute - calculates directions, and id to be used in GetRouteTravelTimes
+
+		find_route_url = "#{token.api_server}?Action=FindRoute&Token=#{token.value}&wp_1=#{@journey.origin_coordinates}&wp_2=#{@journey.destination_coordinates}&ArrivalTime=#{@journey.time_must_arrive_by.iso8601}&UseTraffic=false"
+
+		find_route_response = HTTParty.get(URI.encode(find_route_url))["Inrix"]["Trip"]
+
+		find_route_id = find_route_response["Route"]["id"]
+
+		directions = find_route_response["Route"]["Maneuvers"]["Maneuver"].map do |turn| # directions is an array
+			turn["text"].squish.gsub(/go .+ for /, 'go ') # make directions easier to read
+		end
+
+		[find_route_id, directions]
+
 	end
 
 end
