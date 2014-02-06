@@ -8,7 +8,11 @@ class JourneysController < ApplicationController
 		# @user = User.new("Test") # later this should be an if-else-end statement, if user is logged in then set @user as User.find(id)
 		@journey = Journey.new(journey_params)
 
-		@journey.save
+		unless @journey.save
+			flash[:error] = @journey.errors.full_messages.join(", ")
+			redirect_to new_journey_path
+			return
+		end
 
 		token = Token.new
 

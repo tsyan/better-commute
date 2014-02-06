@@ -3,6 +3,7 @@ require 'chronic'
 class Journey < ActiveRecord::Base
 	belongs_to :user
 	has_many :routes
+	validates_presence_of :name, :origin_string, :destination_string, :time_must_arrive_by_string
 
 	# defines origin_string in terms of something that exists in the database
 	def origin_string
@@ -11,6 +12,8 @@ class Journey < ActiveRecord::Base
 
 	# defines origin_coordinates and origin_address from user input and stores it in the database
 	def origin_string=(user_input)
+		return if user_input.blank?
+
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
 		origin_geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
@@ -34,13 +37,13 @@ class Journey < ActiveRecord::Base
 
 	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
+		return if user_input.blank?
+
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
-		# destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
-		# 	HTTParty.get(URI.encode(search_url))["results"][0]
-		# end
-
-		destination_geocode = HTTParty.get(URI.encode(search_url))["results"][0]
+		destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
+			HTTParty.get(URI.encode(search_url))["results"][0]
+		end
 
 		lat = destination_geocode["geometry"]["location"]["lat"].to_s
 		lon = destination_geocode["geometry"]["location"]["lng"].to_s
@@ -59,6 +62,8 @@ class Journey < ActiveRecord::Base
 
 	# defines time_must_arrive_by from user input and stores it in the database
 	def time_must_arrive_by_string=(user_input)
+		return if user_input.blank?
+
 		self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
 	end
 
