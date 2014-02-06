@@ -16,10 +16,12 @@ class Journey < ActiveRecord::Base
 		lat = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lat"].to_s
 		lon = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lng"].to_s
 
+		# origin_coordinates MUST exist in the database
 		self.origin_coordinates = lat + "," + lon
 
 		formatted_address = HTTParty.get(URI.encode(search_url))["results"][0]["formatted_address"].chomp!(", USA")
 
+		# origin_address MUST exist in the database
 		self.origin_address = formatted_address
 	end
 
@@ -35,10 +37,12 @@ class Journey < ActiveRecord::Base
 		lat = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lat"].to_s
 		lon = HTTParty.get(URI.encode(search_url))["results"][0]["geometry"]["location"]["lng"].to_s
 
+		# destination_coordinates MUST exist in the database
 		self.destination_coordinates = lat + "," + lon
 
 		formatted_address = HTTParty.get(URI.encode(search_url))["results"][0]["formatted_address"].chomp!(", USA")
 
+		# destination_address MUST exist in the databaseh
 		self.destination_address = formatted_address
 	end
 
