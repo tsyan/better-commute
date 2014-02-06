@@ -18,8 +18,8 @@ class JourneysController < ApplicationController
 
 		find_route_id = find_route_response["Route"]["id"]
 
-		directions = find_route_response["Route"]["Maneuvers"]["Maneuver"].map do |turn| # this is an array
-  		turn["text"].squish
+		directions = find_route_response["Route"]["Maneuvers"]["Maneuver"].map do |turn| # directions is an array
+  		turn["text"].squish.gsub(/go .+ for /, 'go ') # make directions easier to read
 		end
 
 		# calculate last_departure_travel_time
