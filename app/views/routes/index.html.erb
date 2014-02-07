@@ -1,11 +1,14 @@
-<h2>Journey: <%= @journey.name %></h2>
+<h2><%= @journey.name %></h2>
 
-<p>From: <%= @journey.origin_string %> (located at <%= @journey.origin_coordinates %>)</p>
-<p>To: <%= @journey.destination_address %> (located at <%= @journey.destination_coordinates %>)</p>
+<div class="info">
+<p>From: <%= @journey.origin_string %> </p>
+<p>To: <%= @journey.destination_address %> </p>
 <p>Arriving By: <%= @journey.time_must_arrive_by.localtime.strftime("%l:%M %P on %A, %b %-d") %></p>
+</div>
 
 <h2>Departures</h2>
 
+<div class="departures">
 <p><strong>Option 1:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Depart: <%= @route_1.departure_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Arrive: <%= @route_1.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -53,13 +56,17 @@
 	Arrive: <%= @route_8.arrival_time.strftime("%l:%M %P") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Travel Time: <%= @route_8.travel_time %> min
 </p>
+</div>
 
 <h2>Driving Directions</h2>
 
+<div class="directions">
 <ul>
 	<% @route_1.directions.each do |step| %>
 		<li><%= step %></li>
 	<% end %>
 </ul>
+</div>
 
-<p><%= link_to "Create a New Journey", new_journey_path %></p>
+<br>
+<p><%= button_to "Create a New Journey", new_journey_path %></p>
