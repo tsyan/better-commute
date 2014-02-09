@@ -1,5 +1,3 @@
-require 'httparty'
-
 class Token
   include HTTParty
 
