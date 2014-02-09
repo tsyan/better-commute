@@ -1,19 +1,26 @@
+<div class="input_form">
+
 	<%= form_for @journey do |f| %>
 
-<h3>Where To?</h3>
-		<p><%= f.label :origin_string, "From: " %>
-		<%= f.text_field :origin_string, placeholder: "street address" %>
-		<%= f.label :destination_string, "To: " %>
-		<%= f.text_field :destination_string, placeholder: "street address" %></p>
-		<br>
+		<div class="input_row">
+			<%= f.label :origin_string, "From: ", class: "input_label" %>
+			<%= f.text_field :origin_string, placeholder: "street address", class: "input_box" %>
+		</div>
 
-<h3>By When?</h3>
-		<p><%= f.label :time_must_arrive_by_string, "Must Arrive By: " %>
-		<%= f.text_field :time_must_arrive_by_string, placeholder: "e.g. Tuesday 9am" %></p>
-		<br>
+		<div class="input_row">
+			<%= f.label :destination_string, "To: ", class: "input_label"  %>
+			<%= f.text_field :destination_string, placeholder: "street address", class: "input_box" %>
+		</div>
 
-		<p><%= f.submit "Create Routes" %></p>
+		<div class="input_row">
+			<%= f.label :time_must_arrive_by_string, "Arrive By: ", class: "input_label"  %>
+			<%= f.text_field :time_must_arrive_by_string, placeholder: "e.g. Tuesday 9am", class: "input_box" %>
+		</div>
+
+</div>
+
+
+		<%= f.submit "Calculate!" %>
+
 	<% end %>
-
-
 

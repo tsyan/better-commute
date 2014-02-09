@@ -1,10 +1,19 @@
 <div class="info">
 
-	<p><span class="info_label">From: </span><%= @journey.origin_string %> </p>
+	<div class="info_row">
+		<div class="info_label">From: </div>
+		<div class="info_desc"><%= @journey.origin_string %></div>
+	</div>
 
-	<p><span class="info_label">To: </span><%= @journey.destination_address %> </p>
+	<div class="info_row">
+		<div class="info_label">To: </div>
+		<div class="info_desc"><%= @journey.destination_address %></div>
+	</div>
 
-	<p><span class="info_label">Arriving By: </span><%= @journey.time_must_arrive_by.localtime.strftime("%l:%M %P on %A, %b %-d") %></p>
+	<div class="info_row">
+		<div class="info_label">Arriving By: </div>
+		<div class="info_desc"><%= @journey.time_must_arrive_by.localtime.strftime("%l:%M %P on %A, %b %-d") %></div>
+	</div>
 
 </div>
 
@@ -40,4 +49,4 @@
 </div>
 
 <br>
-<p><%= button_to "Create a New Journey", new_journey_path %></p>
+<p><%= button_to "Search Again", new_journey_path %></p>
