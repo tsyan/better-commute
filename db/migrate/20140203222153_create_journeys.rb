@@ -1,7 +1,6 @@
 class CreateJourneys < ActiveRecord::Migration
   def change
     create_table :journeys do |t|
-      t.text :name
       t.text :origin_address
       t.text :origin_coordinates
       t.text :destination_address

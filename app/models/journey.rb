@@ -3,7 +3,7 @@ require 'chronic'
 class Journey < ActiveRecord::Base
 	belongs_to :user
 	has_many :routes
-	validates_presence_of :name, :origin_string, :destination_string, :time_must_arrive_by_string
+	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string
 
 	# defines origin_string in terms of something that exists in the database
 	def origin_string
