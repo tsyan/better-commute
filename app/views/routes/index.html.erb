@@ -30,7 +30,7 @@
 				<tr>
 					<td class="depart"><%= route.departure_time.strftime("%l:%M %P") %></td>
 					<td class="arrive"><%= route.arrival_time.strftime("%l:%M %P") %></td>
-					<td class="travel_time"><%= route.travel_time %> min</td>
+					<td class="travel_time"><%= route.readable_travel_time %></td>
 				</tr>
 			<% end %>
 

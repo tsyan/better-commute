@@ -40,6 +40,8 @@ class Journey < ActiveRecord::Base
 	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
 
+		return if user_input.blank?
+
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
 		destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
@@ -69,6 +71,9 @@ class Journey < ActiveRecord::Base
 
 		self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
 	end
+
+
+
 
 end
 
