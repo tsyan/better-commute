@@ -14,22 +14,11 @@ class Journey < ActiveRecord::Base
 	def origin_string=(user_input)
 		return if user_input.blank?
 
-		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
+		origin = Location.new(user_input)
 
-		origin_geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
-			HTTParty.get(URI.encode(search_url))["results"][0]
-		end
+		self.origin_address = origin.get_origin_address
 
-		return if origin_geocode.blank?
-
-		lat = origin_geocode["geometry"]["location"]["lat"].to_s
-		lon = origin_geocode["geometry"]["location"]["lng"].to_s
-
-		self.origin_coordinates = lat + "," + lon
-
-		formatted_address = origin_geocode["formatted_address"].chomp!(", USA")
-
-		self.origin_address = formatted_address
+		self.origin_coordinates = origin.get_origin_coordinates
 	end
 
 	# defines destination_string in terms of something that exists in the database
@@ -39,25 +28,13 @@ class Journey < ActiveRecord::Base
 
 	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
-
 		return if user_input.blank?
 
-		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
+		destination = Location.new(user_input)
 
-		destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
-			HTTParty.get(URI.encode(search_url))["results"][0]
-		end
+		self.destination_address = destination.get_destination_address
 
-		return if destination_geocode.blank?
-
-		lat = destination_geocode["geometry"]["location"]["lat"].to_s
-		lon = destination_geocode["geometry"]["location"]["lng"].to_s
-
-		self.destination_coordinates = lat + "," + lon
-
-		formatted_address = destination_geocode["formatted_address"].chomp!(", USA")
-
-		self.destination_address = formatted_address
+		self.destination_coordinates = destination.get_destination_coordinates
 	end
 
 	# defines time_must_arrive_by_string in terms of something that exists in the database
@@ -71,9 +48,6 @@ class Journey < ActiveRecord::Base
 
 		self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
 	end
-
-
-
 
 end
 

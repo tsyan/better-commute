@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 20140203222459) do
   enable_extension "plpgsql"
 
   create_table "journeys", force: true do |t|
-    t.text     "name"
     t.text     "origin_address"
     t.text     "origin_coordinates"
     t.text     "destination_address"
@@ -41,11 +40,5 @@ ActiveRecord::Schema.define(version: 20140203222459) do
   end
 
   add_index "routes", ["journey_id"], name: "index_routes_on_journey_id", using: :btree
-
-  create_table "users", force: true do |t|
-    t.text     "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end
