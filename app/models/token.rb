@@ -9,17 +9,18 @@ class Token
   	vendor_id = ENV["VENDOR_ID"]
   	consumer_id = ENV["CONSUMER_ID"]
 
-  	@token = Token.get("#{token_server}?action=GetSecurityToken&VendorID=#{vendor_id}&ConsumerID=#{consumer_id}").parsed_response["Inrix"]["AuthResponse"]["AuthToken"]
-  	@server_path = Token.get("#{token_server}?action=GetSecurityToken&VendorID=#{vendor_id}&ConsumerID=#{consumer_id}").parsed_response["Inrix"]["AuthResponse"]["ServerPaths"]["ServerPath"]
+  	@token = Rails.cache.fetch(["tokenwhatxy", token_server, vendor_id, consumer_id], expires_in: 56.minutes) do
+        Token.get("#{token_server}?action=GetSecurityToken&VendorID=#{vendor_id}&ConsumerID=#{consumer_id}").parsed_response["Inrix"]["AuthResponse"]
+      end
   end
 
   def value
-  	@token["__content__"]
+  	@token["AuthToken"]["__content__"]
   end
 
   def valid?
   	current_time = Time.now.localtime
-  	expire_time = Time.parse(@token["expiry"]).localtime
+  	expire_time = Time.parse(@token["AuthToken"]["expiry"]).localtime
 
   	if current_time < expire_time
   		return true
@@ -29,11 +30,11 @@ class Token
   end
 
   def api_server
-		@server_path[0]["__content__"]
+		@token["ServerPaths"]["ServerPath"][0]["__content__"]
   end
 
   def tiles_server
-  	@server_path[1]["__content__"]
+  	@token["ServerPaths"]["ServerPath"][1]["__content__"]
   end
 
 end

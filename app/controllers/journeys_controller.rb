@@ -27,10 +27,10 @@ class JourneysController < ApplicationController
 		arrival_times = inrix_route.arrival_times # an array
 
 		# save the routes to the database
-		departure_times.zip(arrival_times, travel_times) do |d, a, t|
-			route = @journey.routes.new(journey_id: @journey.id, departure_time: d, arrival_time: a, travel_time: t, directions: directions)
+		departure_times.zip(arrival_times, travel_times) do |departure_time, arrival_time, travel_time|
+			route = @journey.routes.new(journey_id: @journey.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time, directions: directions)
+			# not sure how to handle saving vs. error-catching here
 			if route.save
-				hi = "yup!"
 			else
 				flash[:error] = route.errors.full_messages.join(", ")
 				redirect_to new_journey_path
