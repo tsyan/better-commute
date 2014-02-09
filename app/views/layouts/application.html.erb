@@ -13,11 +13,13 @@
 
 	<h1><%= link_to "When Should I Leave?", root_path %></h1>
 
-	<% flash.each do |name, msg| %>
-	  <% if msg.is_a?(String) %>
-	    <p><%= content_tag :div, msg, class: "flash_#{name}" %></p>
-	  <% end %>
+
+	<% if flash[:error].present? %>
+		<div class="flash_error">
+			<%= "Oops! Please fill in all fields and try again." %>
+		</div>
 	<% end %>
+
 
 	<%= yield %>
 

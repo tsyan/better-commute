@@ -108,9 +108,7 @@ h3 {
 }
 
 div.input_form {
-	/*position:relative;*/
 	max-width: 660px;
-	/*display:block;*/
 	margin: 0 auto;
 	box-sizing: border-box;
 	padding: 10px;
@@ -127,8 +125,6 @@ div.input_row {
 	margin: 10px;
 	display: block;
 	box-sizing: border-box;
-	/*text-align: right;*/
-	/*border: 1px solid red;*/
 	padding: 10px;
 }
 
@@ -164,7 +160,7 @@ input[type=submit] {
 	width: 300px;
 	height: 60px;
 	padding-bottom: 0px;
-	margin-top: 40px;
+	margin-top: 30px;
 	margin-bottom: 80px;
 	color: white;
 	text-align: center;
@@ -177,20 +173,18 @@ input[type=submit] {
 }
 
 div.flash_error {
-	/*border: 1px solid red;*/
 	width: 30%;
-	color:#white;
+	color:white;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 18px;
-	text-align: left;
+	text-align: center;
 	padding: 20px;
 	margin:0 auto;
 	margin-top: 20px;
 	margin-bottom: 10px;
-	/*background-color: #debb27;*/
-	border-color: #d59521;
-	border: 1px solid #d59521;
+	border: 2px solid #d59521;
 	border-radius: 6px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
 div.info {
@@ -198,7 +192,6 @@ div.info {
 	position: relative;
 	margin: 0 auto;
 	margin-top: 30px;
-	/*font-size: 20px;*/
 	width: 80%;
 	font-family: 'Source Sans Pro', sans-serif;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
@@ -206,12 +199,8 @@ div.info {
 
 div.info_row {
 	box-sizing: border-box;
-	/*line-height: 0.8;*/
-
 	position:relative;
 	display: block;
-	/*margin: 5px;*/
-	/*padding: 5px;*/
 	clear:both;
 	overflow:auto;
 }
@@ -228,7 +217,6 @@ div.info_row {
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	padding: 5px;
 	padding-right: 20px;
-	/*height:36px;*/
 }
 
 .info_desc {
