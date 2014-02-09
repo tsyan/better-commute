@@ -18,6 +18,8 @@ class Location
 	end
 
 	def get_origin_coordinates
+		return if @origin_geocode.blank?
+
 		lat = @origin_geocode["geometry"]["location"]["lat"].to_s
 		lon = @origin_geocode["geometry"]["location"]["lng"].to_s
 
@@ -37,6 +39,8 @@ class Location
 	end
 
 	def get_destination_coordinates
+		return if @destination_geocode.blank?
+
 		lat = @destination_geocode["geometry"]["location"]["lat"].to_s
 		lon = @destination_geocode["geometry"]["location"]["lng"].to_s
 
