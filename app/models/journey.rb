@@ -20,6 +20,8 @@ class Journey < ActiveRecord::Base
 			HTTParty.get(URI.encode(search_url))["results"][0]
 		end
 
+		return if origin_geocode.blank?
+
 		lat = origin_geocode["geometry"]["location"]["lat"].to_s
 		lon = origin_geocode["geometry"]["location"]["lng"].to_s
 
@@ -37,13 +39,14 @@ class Journey < ActiveRecord::Base
 
 	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
-		return if user_input.blank?
 
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
 		destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
 			HTTParty.get(URI.encode(search_url))["results"][0]
 		end
+
+		return if destination_geocode.blank?
 
 		lat = destination_geocode["geometry"]["location"]["lat"].to_s
 		lon = destination_geocode["geometry"]["location"]["lng"].to_s

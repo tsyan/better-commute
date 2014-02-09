@@ -1,69 +1,3 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require_self
- *= require_tree .
- */
-
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-/*html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-/*article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}*/
-
-
-
-
 body, html {
 	background-color: #108a93;
 	color: white;
@@ -75,6 +9,8 @@ body, html {
  }
 
 .vignette {
+	-webkit-box-shadow: 0px 0px 200px -10px #042629 inset;
+	-moz-box-shadow: 0px 0px 200px -10px #042629 inset;
 	box-shadow: 0px 0px 200px -10px #042629 inset;
 	min-height:100%;
 }
@@ -91,6 +27,8 @@ h1 {
 	font-size: 100px;
 	margin: 0 auto;
 	padding-top: 30px;
+	-webkit-text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+	-moz-text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 	text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }
 
@@ -98,12 +36,16 @@ h2 {
 	font-size: 40px;
 	margin-top: 40px;
 	margin-bottom: 20px;
+	-webkit-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+	-moz-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 h3 {
 	font-size: 30px;
 	margin-top: 0px;
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
 
@@ -118,6 +60,7 @@ div.input_form {
 	border: 1px solid #0a565c;
 	border-radius: 6px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
@@ -136,6 +79,8 @@ div.input_row {
 	width: 28%;
 	text-align: right;
 	font-size: 36px;
+	-webkit-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+	-moz-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	letter-spacing: 1px;
 	font-family: 'Glass Antiqua', cursive;
@@ -149,7 +94,7 @@ div.input_row {
 	padding: 12px 10px 5px 10px;
 	font-size: 20px;
 	border-radius: 6px;
-	-webkit-border-radius: 5px;
+	-webkit-border-radius: 6px;
 	font-family: 'Source Sans Pro', sans-serif;
 
 }
@@ -166,9 +111,13 @@ input[type=submit] {
 	text-align: center;
 	background:rgba(22, 200, 58, 0.75);
 	cursor:pointer;
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 	border: 1px solid rgba(10, 86, 92, 0.3);
 	border-radius: 6px;
+	-webkit-box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
+	-moz-box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
 	box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
 }
 
@@ -184,6 +133,8 @@ div.flash_error {
 	margin-bottom: 10px;
 	border: 2px solid #d59521;
 	border-radius: 6px;
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
@@ -194,6 +145,8 @@ div.info {
 	margin-top: 30px;
 	width: 80%;
 	font-family: 'Source Sans Pro', sans-serif;
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
@@ -214,6 +167,8 @@ div.info_row {
 	text-align: right;
 	font-family: 'Glass Antiqua', cursive;
 	font-size: 30px;
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	padding: 5px;
 	padding-right: 20px;
@@ -233,6 +188,8 @@ div.info_row {
 
 div.departures {
 	font-family: 'Source Sans Pro', sans-serif;
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	font-size: 20px;
 }
@@ -263,6 +220,8 @@ td {
 	text-align: center;
   border-top: 1px solid #0d747c;
   font-family: 'Source Sans Pro', sans-serif;
+  -webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  -moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
   text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
   font-size: 20px;
 }
@@ -281,6 +240,8 @@ td.travel_time {
 
 div.directions {
 	font-family: 'Source Sans Pro', sans-serif;
+	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	font-size:20px;
 	color: white;
