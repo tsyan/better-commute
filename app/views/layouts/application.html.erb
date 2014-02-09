@@ -3,17 +3,17 @@
 <head>
   <title>Lovely Commute</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
-  <link href='http://fonts.googleapis.com/css?family=Lily+Script+One' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+  <!-- <link href='http://fonts.googleapis.com/css?family=Lily+Script+One' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'> -->
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<h1>Lovely Commute</h1>
+<h1><%= link_to "When Should I Leave?", root_path %></h1>
 
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <%= content_tag :div, msg, :class => "flash_#{name}" %>
+    <%= content_tag :div, msg, class: "flash_#{name}" %>
   <% end %>
 <% end %>
 
