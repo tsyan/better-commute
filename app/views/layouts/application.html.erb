@@ -9,15 +9,19 @@
 </head>
 <body>
 
-<h1><%= link_to "When Should I Leave?", root_path %></h1>
+<div class="vignette">
 
-<% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
-    <%= content_tag :div, msg, class: "flash_#{name}" %>
-  <% end %>
-<% end %>
+	<h1><%= link_to "When Should I Leave?", root_path %></h1>
 
-<%= yield %>
+	<% flash.each do |name, msg| %>
+	  <% if msg.is_a?(String) %>
+	    <p><%= content_tag :div, msg, class: "flash_#{name}" %></p>
+	  <% end %>
+	<% end %>
+
+	<%= yield %>
+
+</div>
 
 </body>
 </html>

@@ -23,7 +23,7 @@
 			<tr>
 				<th><h2>Depart</h2></th>
 				<th><h2>Arrive</h2></th>
-				<th><h2>Travel Time</h2></th>
+				<th><h2>Driving Time</h2></th>
 			</tr>
 
 			<% @journey.routes.each do |route| %>
@@ -48,5 +48,4 @@
 	</ol>
 </div>
 
-<br>
-<p><%= button_to "Search Again", new_journey_path %></p>
+<%= button_to "Search Again", new_journey_path %>

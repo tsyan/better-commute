@@ -61,10 +61,22 @@ table {
 	border-spacing: 0;
 }*/
 
-body {
+
+
+
+body, html {
 	background-color: #108a93;
 	color: white;
 	text-align: center;
+	margin:0;
+	padding:0;
+	border:0;
+	height:100%;
+ }
+
+.vignette {
+	box-shadow: 0px 0px 200px -10px #042629 inset;
+	min-height:100%;
 }
 
 h1, h1 a, h2, h3 {
@@ -78,7 +90,7 @@ h1, h1 a, h2, h3 {
 h1 {
 	font-size: 100px;
 	margin: 0 auto;
-	margin-top: 20px;
+	padding-top: 30px;
 	text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }
 
@@ -128,7 +140,7 @@ div.input_row {
 	width: 28%;
 	text-align: right;
 	font-size: 36px;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	letter-spacing: 1px;
 	font-family: 'Glass Antiqua', cursive;
 	padding-right: 22px;
@@ -143,6 +155,7 @@ div.input_row {
 	border-radius: 6px;
 	-webkit-border-radius: 5px;
 	font-family: 'Source Sans Pro', sans-serif;
+
 }
 
 input[type=submit] {
@@ -151,18 +164,33 @@ input[type=submit] {
 	width: 300px;
 	height: 60px;
 	padding-bottom: 0px;
-	margin-top: 10px;
+	margin-top: 40px;
+	margin-bottom: 80px;
 	color: white;
 	text-align: center;
-	background:#ad1d28;
+	background:rgba(22, 200, 58, 0.75);
 	cursor:pointer;
-	-webkit-border-radius: 5px;
-	border-radius: 6px;
-	border: 1px solid transparent;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-	-moz-box-shadow:    0px 1px 1px 0px rgba(0,0,0,0.8);
-  -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.8);
-  box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.8);
+	border: 1px solid rgba(10, 86, 92, 0.3);
+	border-radius: 6px;
+	box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
+}
+
+div.flash_error {
+	/*border: 1px solid red;*/
+	width: 30%;
+	color:#white;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 18px;
+	text-align: left;
+	padding: 20px;
+	margin:0 auto;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	/*background-color: #debb27;*/
+	border-color: #d59521;
+	border: 1px solid #d59521;
+	border-radius: 6px;
 }
 
 div.info {
@@ -173,6 +201,7 @@ div.info {
 	/*font-size: 20px;*/
 	width: 80%;
 	font-family: 'Source Sans Pro', sans-serif;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
 div.info_row {
@@ -196,7 +225,7 @@ div.info_row {
 	text-align: right;
 	font-family: 'Glass Antiqua', cursive;
 	font-size: 30px;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	padding: 5px;
 	padding-right: 20px;
 	/*height:36px;*/
@@ -216,6 +245,7 @@ div.info_row {
 
 div.departures {
 	font-family: 'Source Sans Pro', sans-serif;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	font-size: 20px;
 }
 
@@ -245,6 +275,7 @@ td {
 	text-align: center;
   border-top: 1px solid #0d747c;
   font-family: 'Source Sans Pro', sans-serif;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
   font-size: 20px;
 }
 
@@ -262,6 +293,7 @@ td.travel_time {
 
 div.directions {
 	font-family: 'Source Sans Pro', sans-serif;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	font-size:20px;
 	color: white;
 	text-align: left;
