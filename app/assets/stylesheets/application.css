@@ -138,6 +138,10 @@ div.flash_error {
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
+/*div.field_with_errors {
+	border: 1px solid red;
+}*/
+
 div.info {
 	box-sizing: border-box;
 	position: relative;
@@ -157,7 +161,6 @@ div.info_row {
 	clear:both;
 	overflow:auto;
 }
-
 
 .info_label {
 	box-sizing: border-box;

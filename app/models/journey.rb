@@ -5,14 +5,16 @@ class Journey < ActiveRecord::Base
 	has_many :routes
 	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string
 
-	# defines origin_string in terms of something that exists in the database
+	# defines origin_string so that it can pre-populate form fields when re-rendering form
 	def origin_string
-		origin_address
+		@origin_input
 	end
 
 	# defines origin_coordinates and origin_address from user input and stores it in the database
 	def origin_string=(user_input)
 		return if user_input.blank?
+
+		@origin_input = user_input
 
 		origin = Location.new(user_input)
 
@@ -21,14 +23,16 @@ class Journey < ActiveRecord::Base
 		self.origin_coordinates = origin.get_origin_coordinates
 	end
 
-	# defines destination_string in terms of something that exists in the database
+	# defines destination_string so that it can pre-populate form fields when re-rendering form
 	def destination_string
-		destination_address
+		@destination_input
 	end
 
 	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
 		return if user_input.blank?
+
+		@destination_input = user_input
 
 		destination = Location.new(user_input)
 
@@ -37,14 +41,16 @@ class Journey < ActiveRecord::Base
 		self.destination_coordinates = destination.get_destination_coordinates
 	end
 
-	# defines time_must_arrive_by_string in terms of something that exists in the database
+	# defines time_must_arrive_by_string so that it can pre-populate form fields when re-rendering form
 	def time_must_arrive_by_string
-		time_must_arrive_by.to_s
+		@time_must_arrive_by_input
 	end
 
 	# defines time_must_arrive_by from user input and stores it in the database
 	def time_must_arrive_by_string=(user_input)
 		return if user_input.blank?
+
+		@time_must_arrive_by_input = user_input
 
 		self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
 	end
