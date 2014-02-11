@@ -8,7 +8,7 @@ gem 'chronic'
 gem 'dotenv-rails'
 gem 'rails_12factor'
 
-group :development do
+group :development, :test do
 	gem 'pry'
 	gem 'pry-nav'
 	gem 'pry-stack_explorer'
@@ -16,6 +16,12 @@ group :development do
 	gem 'quiet_assets'
 	gem 'better_errors'
 	gem 'binding_of_caller'
+
+	gem 'rspec-rails', '~> 3.0.0.beta'
+	gem 'database_cleaner'
+	gem 'shoulda-matchers'
+	gem 'guard-rspec', require: false
+	gem 'simplecov', require: false
 end
 
 gem 'sass-rails', '~> 4.0.0'
@@ -25,7 +31,5 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
 group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-

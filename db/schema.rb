@@ -22,12 +22,9 @@ ActiveRecord::Schema.define(version: 20140203222459) do
     t.text     "destination_address"
     t.text     "destination_coordinates"
     t.datetime "time_must_arrive_by"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "journeys", ["user_id"], name: "index_journeys_on_user_id", using: :btree
 
   create_table "routes", force: true do |t|
     t.datetime "departure_time"

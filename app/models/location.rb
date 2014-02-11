@@ -8,9 +8,9 @@ class Location
 	def get_origin_address
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{@user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
-		@origin_geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
-			HTTParty.get(URI.encode(search_url))["results"][0]
-		end
+		# @origin_geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
+			@origin_geocode = HTTParty.get(URI.encode(search_url))["results"][0]
+		# end
 
 		return if @origin_geocode.blank?
 
@@ -29,9 +29,11 @@ class Location
 	def get_destination_address
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{@user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 
-		@destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
-			HTTParty.get(URI.encode(search_url))["results"][0]
-		end
+		# @destination_geocode = Rails.cache.fetch(["destination geocode", search_url], expires_in: 1.week) do
+			@destination_geocode = HTTParty.get(URI.encode(search_url))["results"][0]
+		# end
+
+		# binding.pry
 
 		return if @destination_geocode.blank?
 
