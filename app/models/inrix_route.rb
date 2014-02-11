@@ -73,14 +73,10 @@ class InrixRoute
 
 		@arrival_times = []
 
-		@travel_time_in_seconds = @travel_times.map do |travel_time|
-			60*travel_time.to_i
-		end
+		@departure_times.zip @travel_times
 
-		@departure_times.zip @travel_time_in_seconds
-
-		@departure_times.zip(@travel_time_in_seconds).each do |departure_time, travel_time_in_seconds|
-			arrival_time = Time.parse(departure_time).localtime + 60*travel_time_in_seconds.to_i
+		@departure_times.zip(@travel_times).each do |departure_time, travel_time|
+			arrival_time = Time.parse(departure_time).localtime + 60*travel_time.to_i
 			@arrival_times << arrival_time
 		end
 

@@ -26,7 +26,7 @@
 				<th><h2>Driving Time</h2></th>
 			</tr>
 
-			<% @journey.routes.each do |route| %>
+			<% @journey.routes.reverse.each do |route| %>
 				<tr>
 					<td class="depart"><%= route.departure_time.strftime("%l:%M %P") %></td>
 					<td class="arrive"><%= route.arrival_time.strftime("%l:%M %P") %></td>
