@@ -15,7 +15,7 @@ class InrixRoute
 
 	end
 
-	def directions
+	def get_directions
 		directions = @find_route_response["Route"]["Maneuvers"]["Maneuver"].map do |turn| # directions is an array
 			turn["text"].squish.gsub(/go .+ for /, 'go ') # make directions easier to read
 		end

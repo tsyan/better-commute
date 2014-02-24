@@ -62,7 +62,7 @@ class Journey < ActiveRecord::Base
 		token = Token.new
 		inrix_query = InrixRoute.new(token, self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
 
-		directions = inrix_query.directions # an array
+		directions = inrix_query.get_directions # an array
 		inrix_results = inrix_query.get_all_routes # a hash
 
 		inrix_results.each do |route|
