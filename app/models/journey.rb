@@ -51,13 +51,12 @@ class Journey < ActiveRecord::Base
 	end
 
 	def generate_routes
-		token = Token.new
-		inrix_query = InrixRoute.new(token, self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
+		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
 
 		directions = inrix_query.get_directions # an array
-		inrix_results = inrix_query.get_all_routes # a hash
+		results = inrix_query.get_all_routes # a hash
 
-		inrix_results.each do |route|
+		results.each do |route|
 			departure_time = Time.parse(route["departureTime"]).localtime
 			travel_time = route["travelTimeMinutes"]
 			arrival_time = departure_time + 60*travel_time.to_i

@@ -1,9 +1,9 @@
 class InrixRoute
 	include HTTParty
 
-	def initialize(token, origin_coordinates, destination_coordinates, time_must_arrive_by, journey_id)
+	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by, journey_id)
 
-		@token = token
+		@token = Token.new
 		@origin_coordinates = origin_coordinates
 		@destination_coordinates = destination_coordinates
 		@time_must_arrive_by = time_must_arrive_by
