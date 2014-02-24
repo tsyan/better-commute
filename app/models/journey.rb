@@ -63,9 +63,9 @@ class Journey < ActiveRecord::Base
 
 		inrix_route = InrixRoute.new(token, self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
 
-		route_id = inrix_route.id
+		# route_id = inrix_route.route_id
 		directions = inrix_route.directions # directions is an array
-		first_departure_time = inrix_route.first_departure_time
+		# first_departure_time = inrix_route.first_departure_time
 
 		travel_times = inrix_route.travel_times # travel_times is an array
 		departure_times = inrix_route.departure_times # an array
