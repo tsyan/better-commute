@@ -1,34 +1,31 @@
 body, html {
 	background-color: #108a93;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	height: 100%;
 	color: white;
 	text-align: center;
-	margin:0;
-	padding:0;
-	border:0;
-	height:100%;
  }
 
 .vignette {
-	-webkit-box-shadow: 0px 0px 200px -10px #042629 inset;
-	-moz-box-shadow: 0px 0px 200px -10px #042629 inset;
 	box-shadow: 0px 0px 200px -10px #042629 inset;
 	min-height:100%;
 }
 
 h1, h1 a, h2, h3 {
-	font-weight: normal;
-	letter-spacing: 1px;
 	font-family: 'Glass Antiqua', cursive;
-	text-decoration: none;
+	font-weight: normal;
 	color: white;
+	text-decoration: none;
+	letter-spacing: 1px;
 }
 
 h1 {
+	display: inline-block;
 	font-size: 100px;
 	margin: 0 auto;
 	padding-top: 30px;
-	-webkit-text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-	-moz-text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 	text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }
 
@@ -36,28 +33,26 @@ h2 {
 	font-size: 40px;
 	margin-top: 40px;
 	margin-bottom: 20px;
-	-webkit-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-	-moz-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 h3 {
 	font-size: 30px;
 	margin-top: 0px;
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
 
 div.input_form {
-	max-width: 660px;
-	margin: 0 auto;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
-	padding: 10px;
+	display: block;	/* same as default, leave just in case */
+	overflow: auto; /* makes height expand with content */
+	margin: 0 auto; /* centers form on page */
+	max-width: 600px;
+	min-width: 40%; /* relative to parent div */
+	padding: 25px 25px 0px 25px; /* internal padding of form, set bottom value on .input_row */
 	margin-top: 30px;
-	margin-bottom: 20px;
 	background-color: #0d747c;
 	border: 1px solid #0a565c;
 	border-radius: 6px;
@@ -67,12 +62,15 @@ div.input_form {
 }
 
 div.input_row {
-	margin: 10px;
-	display: block;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
-	padding: 10px;
+	display: block; /* makes row takes up full width of form */
+	overflow: auto; /* makes height expand with content */
+	width: 100%; /* relative to form */
+	margin-bottom: 25px; /* should be same as form padding */
+	padding: 0; /* for better scaling, don't do internal padding within a row */
+	line-height: 48px; /* aligns baseline of label with baseline of textbox */
 }
 
 .input_label {
@@ -80,31 +78,27 @@ div.input_row {
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	display: inline-block;
-	/*border: 1px solid red;*/
-	position: relative;
-	width: 28%;
-	text-align: right;
-	font-size: 36px;
-	-webkit-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-	-moz-text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-	letter-spacing: 1px;
+	float: left;
+	width: 30%;
+	padding-right: 22px; /* moves label away from textbox */
 	font-family: 'Glass Antiqua', cursive;
-	padding-right: 22px;
+	font-size: 36px;
+	letter-spacing: 1px;
+	text-align: right;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .input_box {
-	width: 70%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	display: inline-block;
-	padding: 12px 10px 5px 10px;
+	float: left;
+	width: 70%;
+	padding: 12px 10px 5px 10px; /* internal padding within textbox */
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 20px;
 	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	font-family: 'Source Sans Pro', sans-serif;
-
 }
 
 input[type=submit] {
@@ -112,43 +106,31 @@ input[type=submit] {
 	font-size: 28px;
 	width: 300px;
 	height: 60px;
-	padding-bottom: 0px;
 	margin-top: 30px;
 	margin-bottom: 80px;
 	color: white;
 	text-align: center;
-	background:rgba(22, 200, 58, 0.75);
-	cursor:pointer;
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+	background: rgba(22, 200, 58, 0.75);
+	cursor: pointer;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 	border: 1px solid rgba(10, 86, 92, 0.3);
 	border-radius: 6px;
-	-webkit-box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
-	-moz-box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
 	box-shadow: 2px 3px 6px -2px rgba(0,0,0,0.7);
 }
 
 div.flash_error {
-	width: 30%;
-	color:white;
+	max-width: 400px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding: 20px;
+	border: 2px solid #d59521;
+	border-radius: 6px;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 18px;
 	text-align: center;
-	padding: 20px;
-	margin:0 auto;
-	margin-top: 20px;
-	margin-bottom: 10px;
-	border: 2px solid #d59521;
-	border-radius: 6px;
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
-
-/*div.field_with_errors {
-	border: 1px solid red;
-}*/
 
 div.info {
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -159,8 +141,6 @@ div.info {
 	margin-top: 30px;
 	width: 80%;
 	font-family: 'Source Sans Pro', sans-serif;
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
@@ -168,10 +148,10 @@ div.info_row {
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
-	position:relative;
+	position: relative;
 	display: block;
-	clear:both;
-	overflow:auto;
+	clear: both;
+	overflow: auto;
 }
 
 .info_label {
@@ -181,66 +161,60 @@ div.info_row {
 	display: inline-block;
 	float: left;
 	width: 40%;
+	padding: 5px;
+	padding-right: 20px;
 	text-align: right;
 	font-family: 'Glass Antiqua', cursive;
 	font-size: 30px;
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-	padding: 5px;
-	padding-right: 20px;
 }
 
 .info_desc {
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
-	display:inline-block;
+	display: inline-block;
+	float: left;
 	width: 60%;
-	text-align: left;
-	float:left;
+	height: 36px;
 	padding: 5px;
 	padding-top: 10px;
-	height:36px;
+	text-align: left;
 	font-size: 20px;
 }
 
 div.departures {
 	font-family: 'Source Sans Pro', sans-serif;
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	font-size: 20px;
 }
 
 table {
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 66%;
-    margin: 0 auto;
-    margin-top: 46px;
-    margin-bottom: 14px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 66%;
+  margin: 0 auto;
+  margin-top: 46px;
+  margin-bottom: 14px;
 }
 
 th, td {
-    overflow: hidden;
-    line-height: 2;
+  overflow: hidden;
+  line-height: 2;
 }
 
 th h2 {
 	margin: 0px;
-	text-align: center;
-	line-height: 1;
 	padding-bottom: 16px;
+	line-height: 1;
+	text-align: center;
 }
 
 td {
 	text-align: center;
   border-top: 1px solid #0d747c;
   font-family: 'Source Sans Pro', sans-serif;
-  -webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-  -moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
   text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
   font-size: 20px;
 }
@@ -258,17 +232,14 @@ td.travel_time {
 }
 
 div.directions {
-	font-family: 'Source Sans Pro', sans-serif;
-	-moz-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	font-size:20px;
-	color: white;
-	text-align: left;
-	margin: 0 auto;
-	position:relative;
-	min-width: 25%;
 	display: inline-block;
+	position: relative;
+	min-width: 25%;
+	margin: 0 auto;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	text-align: left;
 }
 
 ol {
@@ -277,7 +248,7 @@ ol {
 }
 
 li {
-	line-height: 1.5;
 	padding-bottom: 16px;
+	line-height: 1.5;
 }
 
