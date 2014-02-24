@@ -16,7 +16,7 @@
 
 	<% if flash[:error].present? %>
 		<div class="flash_error">
-			<%= "Oops! Please fill in all fields and try again." %>
+			<%= flash[:error] %>
 		</div>
 	<% end %>
 
