@@ -1,15 +1,14 @@
 class InrixRoute
 	include HTTParty
 
-	def initialize(token, origin_coordinates, destination_coordinates, time_must_arrive_by, journey_id)
+	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
 
-		@token = token
+		@token = Token.new
 		@origin_coordinates = origin_coordinates
 		@destination_coordinates = destination_coordinates
 		@time_must_arrive_by = time_must_arrive_by
-		@count = 8 # to be used later in GetRouteTravelTimes url
-		@interval = 15 # to be used later in GetRouteTravelTimes url
-		@journey_id = journey_id
+		@count = 8 # to be used later in get_all_routes url
+		@interval = 15 # to be used later in get_all_routes url
 		@route_id = get_route_id # private method
 		@first_departure_time = get_first_departure_time # private method
 

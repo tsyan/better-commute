@@ -12,7 +12,7 @@
 
 	<div class="info_row">
 		<div class="info_label">Arriving By: </div>
-		<div class="info_desc"><%= @journey.time_must_arrive_by.localtime.strftime("%l:%M %P on %A, %b %-d") %></div>
+		<div class="info_desc"><%= @journey.time_must_arrive_by.strftime("%l:%M %P on %A, %b %-d") %></div>
 	</div>
 
 </div>

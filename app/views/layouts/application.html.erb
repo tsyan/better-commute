@@ -13,13 +13,11 @@
 
 	<h1><%= link_to "When Should I Leave?", root_path %></h1>
 
-
 	<% if flash[:error].present? %>
 		<div class="flash_error">
 			<%= flash[:error] %>
 		</div>
 	<% end %>
-
 
 	<%= yield %>
 
