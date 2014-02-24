@@ -1,7 +1,7 @@
 class Location
 	include HTTParty
 
-	attr_reader :geocode, :address, :coordinates
+	attr_accessor :geocode, :address, :coordinates
 
 	def initialize(user_input)
 		@user_input = user_input

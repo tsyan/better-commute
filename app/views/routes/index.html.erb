@@ -42,7 +42,7 @@
 
 <div class="directions">
 	<ol>
-		<% @routes.first.directions.each do |step| %>
+		<% @journey.directions.each do |step| %>
 			<li><%= step %></li>
 		<% end %>
 	</ol>

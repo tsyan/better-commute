@@ -7,6 +7,7 @@ gem 'httparty'
 gem 'chronic'
 gem 'dotenv-rails'
 gem 'rails_12factor'
+gem 'bullet'
 
 group :development, :test do
 	gem 'pry'
@@ -16,6 +17,8 @@ group :development, :test do
 	gem 'quiet_assets'
 	gem 'better_errors'
 	gem 'binding_of_caller'
+	gem 'rack-mini-profiler'
+
 
 	gem 'rspec-rails', '~> 3.0.0.beta'
 	gem 'database_cleaner'

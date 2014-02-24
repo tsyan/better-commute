@@ -57,8 +57,10 @@ class Journey < ActiveRecord::Base
 			departure_time = Time.parse(route["departureTime"])
 			travel_time = route["travelTimeMinutes"]
 			arrival_time = departure_time + 60*travel_time.to_i
-			self.routes.create(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time, directions: inrix_query.get_directions)
+			self.routes.create(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time)
 		end
+
+		self.update(directions: inrix_query.directions)
 
 	end
 

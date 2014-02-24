@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20140203222459) do
     t.text     "destination_address"
     t.text     "destination_coordinates"
     t.datetime "time_must_arrive_by"
+    t.text     "directions",              default: ["0"], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,7 +31,6 @@ ActiveRecord::Schema.define(version: 20140203222459) do
     t.datetime "departure_time"
     t.datetime "arrival_time"
     t.integer  "travel_time"
-    t.text     "directions",     default: ["0"], array: true
     t.integer  "journey_id"
     t.datetime "created_at"
     t.datetime "updated_at"

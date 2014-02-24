@@ -1,6 +1,8 @@
 class InrixRoute
 	include HTTParty
 
+	attr_accessor :directions
+
 	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
 
 		@token = Token.new
@@ -11,6 +13,7 @@ class InrixRoute
 		@interval = 15 # to be used later in get_all_routes url
 		@route_id = get_route_id # private method
 		@first_departure_time = get_first_departure_time # private method
+		@directions = get_directions
 
 	end
 
