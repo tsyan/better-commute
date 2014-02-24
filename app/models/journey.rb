@@ -10,15 +10,18 @@ class Journey < ActiveRecord::Base
 
 	# defines origin_coordinates and origin_address from user input and stores it in the database
 	def origin_string=(user_input)
-		return if user_input.blank?
-
-		@origin_input = user_input
-
 		origin = Location.new(user_input)
 
-		self.origin_address = origin.get_origin_address
+		address = origin.get_origin_address
+		self.origin_address = address
 
-		self.origin_coordinates = origin.get_origin_coordinates
+		coordinates = origin.get_origin_coordinates
+		self.origin_coordinates = coordinates
+
+		# save user input only if user input was parsed correctly, else triggers validator and reloads form
+		if address && coordinates
+			@origin_input = user_input
+		end
 	end
 
 	# defines destination_string so that it can pre-populate form fields when re-rendering form
@@ -28,15 +31,18 @@ class Journey < ActiveRecord::Base
 
 	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
-		return if user_input.blank?
-
-		@destination_input = user_input
-
 		destination = Location.new(user_input)
 
-		self.destination_address = destination.get_destination_address
+		address = destination.get_destination_address
+		self.destination_address = address
 
-		self.destination_coordinates = destination.get_destination_coordinates
+		coordinates = destination.get_destination_coordinates
+		self.destination_coordinates = coordinates
+
+		# save user input only if user input was parsed correctly, else triggers validator and reloads form
+		if address && coordinates
+			@destination_input = user_input
+		end
 	end
 
 	# defines time_must_arrive_by_string so that it can pre-populate form fields when re-rendering form
