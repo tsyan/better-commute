@@ -3,12 +3,12 @@ class Journey < ActiveRecord::Base
 	has_many :routes
 	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string
 
-	# defines origin_string so that it can pre-populate form fields when re-rendering form
+	# defines origin_string so that it can pre-populate form fields when reloading form
 	def origin_string
 		@origin_input
 	end
 
-	# defines origin_coordinates and origin_address from user input and stores it in the database
+	# defines origin_coordinates and origin_address from user input and stores them in the database
 	def origin_string=(user_input)
 		origin = Location.new(user_input)
 		self.origin_address = origin.address
@@ -20,12 +20,12 @@ class Journey < ActiveRecord::Base
 		end
 	end
 
-	# defines destination_string so that it can pre-populate form fields when re-rendering form
+	# defines destination_string so that it can pre-populate form fields when reloading form
 	def destination_string
 		@destination_input
 	end
 
-	# defines destination_coordinates and destination_address from user input and stores it in the database
+	# defines destination_coordinates and destination_address from user input and stores them in the database
 	def destination_string=(user_input)
 		destination = Location.new(user_input)
 		self.destination_address = destination.address
@@ -37,12 +37,12 @@ class Journey < ActiveRecord::Base
 		end
 	end
 
-	# defines time_must_arrive_by_string so that it can pre-populate form fields when re-rendering form
+	# defines time_must_arrive_by_string so that it can pre-populate form fields when reloading form
 	def time_must_arrive_by_string
 		@time_must_arrive_by_input
 	end
 
-	# defines time_must_arrive_by from user input and stores it in the database
+	# defines time_must_arrive_by from user input and stores them in the database
 	def time_must_arrive_by_string=(user_input)
 		# save user input only if user input was parsed correctly, else triggers validator and reloads form
 		if self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
@@ -51,7 +51,7 @@ class Journey < ActiveRecord::Base
 	end
 
 	def generate_routes
-		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
+		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by)
 
 		inrix_query.get_all_routes.each do |route|
 			departure_time = Time.parse(route["departureTime"]).localtime
