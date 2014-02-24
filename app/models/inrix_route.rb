@@ -23,53 +23,7 @@ class InrixRoute
 
 	def get_all_routes
 		travel_times_url = "#{@token.api_server}?Action=GetRouteTravelTimes&Token=#{@token.value}&RouteID=#{@route_id}&DepartureTime=#{@first_departure_time.iso8601}&TravelTimeCount=#{@count}&TravelTimeInterval=#{@interval}"
-
 		all_routes = HTTParty.get(URI.encode(travel_times_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
-	end
-
-	def travel_times
-
-		travel_times_url = "#{@token.api_server}?Action=GetRouteTravelTimes&Token=#{@token.value}&RouteID=#{@route_id}&DepartureTime=#{@first_departure_time.iso8601}&TravelTimeCount=#{@count}&TravelTimeInterval=#{@interval}"
-
-		@travel_times_response = HTTParty.get(URI.encode(travel_times_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
-
-		@travel_times = []
-
-		@travel_times_response.each do |route|
-			travel_time = route["travelTimeMinutes"]
-			@travel_times << travel_time
-		end
-
-		return @travel_times
-
-	end
-
-	def departure_times
-
-		@departure_times = []
-
-		@travel_times_response.each do |route|
-			departure_time = route["departureTime"]
-			@departure_times << departure_time
-		end
-
-		return @departure_times
-
-	end
-
-	def arrival_times
-
-		@arrival_times = []
-
-		@departure_times.zip @travel_times
-
-		@departure_times.zip(@travel_times).each do |departure_time, travel_time|
-			arrival_time = Time.parse(departure_time).localtime + 60*travel_time.to_i
-			@arrival_times << arrival_time
-		end
-
-		return @arrival_times
-
 	end
 
 	private

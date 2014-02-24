@@ -60,27 +60,17 @@ class Journey < ActiveRecord::Base
 
 	def generate_routes
 		token = Token.new
-		inrix_route = InrixRoute.new(token, self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
+		inrix_query = InrixRoute.new(token, self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.id)
 
-		directions = inrix_route.directions # an array
-		travel_times = inrix_route.travel_times # an array
-		departure_times = inrix_route.departure_times # an array
-		arrival_times = inrix_route.arrival_times # an array
+		directions = inrix_query.directions # an array
+		inrix_results = inrix_query.get_all_routes # a hash
 
-		# save the routes to the database
-		departure_times.zip(arrival_times, travel_times) do |departure_time, arrival_time, travel_time|
-			route = self.routes.new(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time, directions: directions)
-			route.save
+		inrix_results.each do |route|
+			departure_time = Time.parse(route["departureTime"]).localtime
+			travel_time = route["travelTimeMinutes"]
+			arrival_time = departure_time + 60*travel_time.to_i
+			self.routes.create(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time, directions: directions)
 		end
-
-		# @inrix_routes = inrix_route.get_all_routes
-
-		# binding.pry
-
-		# @inrix_routes.each do |route|
-		# 	option = self.routes.new(journey_id: self.id, departure_time: route["departure time"], arrival_time: route["arrival time"], travel_time: route["travel_time"], directions: directions)
-		# 	option.save
-		# end
 
 	end
 
