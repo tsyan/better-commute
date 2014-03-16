@@ -13,8 +13,13 @@ class JourneysController < ApplicationController
 			return
 		end
 
-		@journey.generate_routes
-		redirect_to journey_routes_path(@journey)
+		if !@journey.generate_routes
+			flash.now[:error] = "Oops! Server trouble. Please try again."
+			render :new
+			return
+		else
+			redirect_to journey_routes_path(@journey)
+		end
 	end
 
 	def show

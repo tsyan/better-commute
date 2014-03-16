@@ -59,6 +59,8 @@ class Journey < ActiveRecord::Base
 	def generate_routes
 		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by)
 
+		return if !inrix_query.route_id || !inrix_query.directions || !inrix_query.first_departure_time
+
 		inrix_query.get_all_routes.each do |route|
 			departure_time = Chronic.parse(route["departureTime"])
 			if route["averageSpeed"] == "0"
