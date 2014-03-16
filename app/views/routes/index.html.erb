@@ -1,20 +1,22 @@
-<div class="info">
+<div class="info-wrapper">
+	<span class="info">
 
-	<div class="info_row">
-		<div class="info_label">From: </div>
-		<div class="info_desc"><%= @journey.origin_address %></div>
-	</div>
+		<div class="info_row">
+			<div class="info_label">From: </div>
+			<div class="info_desc"><%= @journey.origin_address %></div>
+		</div>
 
-	<div class="info_row">
-		<div class="info_label">To: </div>
-		<div class="info_desc"><%= @journey.destination_address %></div>
-	</div>
+		<div class="info_row">
+			<div class="info_label">To: </div>
+			<div class="info_desc"><%= @journey.destination_address %></div>
+		</div>
 
-	<div class="info_row">
-		<div class="info_label">Arriving By: </div>
-		<div class="info_desc"><%= @journey.time_must_arrive_by.strftime("%l:%M %P on %A, %b %-d") %></div>
-	</div>
+		<div class="info_row">
+			<div class="info_label">Arriving By: </div>
+			<div class="info_desc"><%= @journey.time_must_arrive_by.strftime("%l:%M %P on %A, %b %-d") %></div>
+		</div>
 
+	</span>
 </div>
 
 <div class="departures">

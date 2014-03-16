@@ -127,14 +127,17 @@ div.flash_error {
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
 
-div.info {
+span.info {
 	position: relative;
 	display: inline-block;
+	clear:both;
 	margin: 0 auto;
 	margin-top: 30px;
-	min-width: 80%;
+	/*min-width: 80%;*/
+	min-width: 55%;
 	font-family: 'Source Sans Pro', sans-serif;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	/*border: 1px solid red;*/
 }
 
 div.info_row {
