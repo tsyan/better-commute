@@ -44,15 +44,16 @@ class Journey < ActiveRecord::Base
 
 	# defines time_must_arrive_by from user input and stores them in the database
 	def time_must_arrive_by_string=(user_input)
-		#
 		parsed_time = Chronic.parse(user_input.to_s, now: Time.now)
-		if Time.now - parsed_time > 0
+
+		if parsed_time == nil || parsed_time - Time.now < -86400
+			return
+		elsif parsed_time - Time.now < 0 && parsed_time - Time.now > -86400
 			parsed_time = parsed_time + 86400
 		end
-		# save user input only if user input was parsed correctly, else triggers validator and reloads form
-		if self.time_must_arrive_by = parsed_time
-			@time_must_arrive_by_input = user_input
-		end
+
+		self.time_must_arrive_by = parsed_time
+		@time_must_arrive_by_input = user_input
 	end
 
 	def generate_routes
