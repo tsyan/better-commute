@@ -36,7 +36,8 @@
 				<% else %>
 					<tr>
 						<td class="depart"><%= route.departure_time.strftime("%l:%M %P") %></td>
-						<td class="unavailable" colspan="2">(route unavailable due to road closures)</td>
+						<td class="unavailable">(route unavailable due to road closures)</td>
+						<td class="travel_time"></td>
 					</tr>
 				<% end %>
 			<% end %>
