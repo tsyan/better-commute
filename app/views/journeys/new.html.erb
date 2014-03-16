@@ -14,7 +14,12 @@
 
 		<div class="input_row">
 			<%= f.label :time_must_arrive_by_string, "Arrive By: ", class: "input_label"  %>
-			<%= f.text_field :time_must_arrive_by_string, placeholder: "e.g. Tuesday 9am", class: "input_box" %>
+			<%= f.text_field :time_must_arrive_by_string, placeholder: "e.g. Monday 9am", class: "input_box" %>
+		</div>
+
+		<div class="input_row">
+			<%= f.label :time_can_leave_at_string, "Leave At: ", class: "input_label"  %>
+			<%= f.text_field :time_can_leave_at_string, placeholder: "e.g. Friday 3pm", class: "input_box" %>
 		</div>
 
 </div>
