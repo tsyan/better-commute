@@ -135,7 +135,6 @@ div.info {
 	min-width: 80%;
 	font-family: 'Source Sans Pro', sans-serif;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid red;
 }
 
 div.info_row {
