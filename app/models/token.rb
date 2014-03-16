@@ -1,5 +1,4 @@
 class Token
-  include HTTParty
 
   def initialize
   	token_server = "http://api.inrix.com/Traffic/Inrix.ashx"

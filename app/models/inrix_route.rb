@@ -1,5 +1,4 @@
 class InrixRoute
-	include HTTParty
 
 	attr_accessor :route_id, :first_departure_time, :directions
 

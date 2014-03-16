@@ -1,5 +1,4 @@
 class Location
-	include HTTParty
 
 	attr_accessor :geocode, :address, :coordinates
 
@@ -28,9 +27,7 @@ class Location
 		search_url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{@user_input}&bounds=42.215297,-71.350708|42.548022,-70.883789&sensor=false"
 		geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
 			HTTParty.get(URI.encode(search_url))["results"][0]
-		end
-		return if geocode.blank?
-		geocode
+		end rescue nil
 	end
 
 end
