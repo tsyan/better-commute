@@ -1,7 +1,6 @@
 class InrixRoute
 	include HTTParty
 
-	attr_reader :directions
 	attr_accessor :directions
 
 	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
