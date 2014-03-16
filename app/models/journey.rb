@@ -1,7 +1,7 @@
 class Journey < ActiveRecord::Base
 	belongs_to :user
 	has_many :routes
-	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string
+	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string, :time_can_leave_at_string
 
 	# defines origin_string so that it can pre-populate form fields when reloading form
 	def origin_string
@@ -54,6 +54,16 @@ class Journey < ActiveRecord::Base
 
 		self.time_must_arrive_by = parsed_time
 		@time_must_arrive_by_input = user_input
+	end
+
+	def time_can_leave_at_string
+		@time_can_leave_at_input
+	end
+
+	def time_can_leave_at_string=(user_input)
+		parsed_time = Chronic.parse(user_input.to_s, now: Time.now)
+		self.time_can_leave_at = parsed_time
+		@time_can_leave_at_input = user_input
 	end
 
 	def generate_routes

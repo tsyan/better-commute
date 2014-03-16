@@ -1,10 +1,12 @@
 class InrixRoute
+	include HTTParty
 
 	attr_accessor :route_id, :first_departure_time, :directions
 
 	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
 
 		@token = Token.new
+		raise
 		@origin_coordinates = origin_coordinates
 		@destination_coordinates = destination_coordinates
 		@time_must_arrive_by = time_must_arrive_by

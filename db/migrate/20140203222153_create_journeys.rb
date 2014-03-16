@@ -7,7 +7,7 @@ class CreateJourneys < ActiveRecord::Migration
       t.text :destination_coordinates
       t.datetime :time_must_arrive_by
       t.datetime :time_can_leave_at
-      t.text :directions, array: true, default: '{0}'
+      t.text :directions, array: true, default: '{No directions available.}'
 
       t.timestamps
     end
