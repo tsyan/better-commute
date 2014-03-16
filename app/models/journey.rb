@@ -44,8 +44,13 @@ class Journey < ActiveRecord::Base
 
 	# defines time_must_arrive_by from user input and stores them in the database
 	def time_must_arrive_by_string=(user_input)
+		#
+		parsed_time = Chronic.parse(user_input.to_s, now: Time.now)
+		if Time.now - parsed_time > 0
+			parsed_time = parsed_time + 86400
+		end
 		# save user input only if user input was parsed correctly, else triggers validator and reloads form
-		if self.time_must_arrive_by = Chronic.parse(user_input.to_s, now: Time.now)
+		if self.time_must_arrive_by = parsed_time
 			@time_must_arrive_by_input = user_input
 		end
 	end
@@ -54,9 +59,14 @@ class Journey < ActiveRecord::Base
 		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by)
 
 		inrix_query.get_all_routes.each do |route|
-			departure_time = Time.parse(route["departureTime"])
-			travel_time = route["travelTimeMinutes"]
-			arrival_time = departure_time + 60*travel_time.to_i
+			departure_time = Chronic.parse(route["departureTime"])
+			if route["averageSpeed"] == "0"
+				travel_time = nil
+				arrival_time = nil
+			else
+				travel_time = route["travelTimeMinutes"]
+				arrival_time = departure_time + 60*travel_time.to_i
+			end
 			self.routes.create(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time)
 		end
 

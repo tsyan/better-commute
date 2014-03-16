@@ -27,11 +27,18 @@
 			</tr>
 
 			<% @routes.each do |route| %>
-				<tr>
-					<td class="depart"><%= route.departure_time.strftime("%l:%M %P") %></td>
-					<td class="arrive"><%= route.arrival_time.strftime("%l:%M %P") %></td>
-					<td class="travel_time"><%= route.readable_travel_time %></td>
-				</tr>
+				<% if route.arrival_time != nil %>
+					<tr>
+						<td class="depart"><%= route.departure_time.strftime("%l:%M %P") %></td>
+						<td class="arrive"><%= route.arrival_time.strftime("%l:%M %P") %></td>
+						<td class="travel_time"><%= route.readable_travel_time %></td>
+					</tr>
+				<% else %>
+					<tr>
+						<td class="depart"><%= route.departure_time.strftime("%l:%M %P") %></td>
+						<td class="unavailable" colspan="2">(route unavailable due to road closures)</td>
+					</tr>
+				<% end %>
 			<% end %>
 
 		</tbody>

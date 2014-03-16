@@ -41,6 +41,11 @@ class InrixRoute
 		departure_response = HTTParty.get(URI.encode(departure_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]
 		last_departure_travel_time = departure_response["travelTimeMinutes"].to_i
 		first_departure_time = (@time_must_arrive_by - 60*last_departure_travel_time) - ((@count-1) * 60*@interval)
+		# if Time.now - first_departure_time > 0
+		# 	first_departure_time + 86400
+		# else
+		# 	first_departure_time
+		# end
 	end
 
 end
