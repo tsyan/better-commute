@@ -40,7 +40,7 @@ class InrixRoute
 	private
 
 	def get_route_id
-		find_route_url = "#{@token.api_server}?Action=FindRoute&Token=#{@token.value}&wp_1=#{@origin_coordinates}&wp_2=&ArrivalTime=#{@time_must_arrive_by.iso8601}&UseTraffic=false"
+		find_route_url = "#{@token.api_server}?Action=FindRoute&Token=#{@token.value}&wp_1=#{@origin_coordinates}&wp_2=#{@destination_coordinates}&ArrivalTime=#{@time_must_arrive_by.iso8601}&UseTraffic=false"
 		server_response = HTTParty.get(URI.encode(find_route_url))
 		if server_response["Inrix"]["statusId"] == "0"
 			@find_route_response = server_response["Inrix"]["Trip"]
