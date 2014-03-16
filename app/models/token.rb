@@ -11,11 +11,11 @@ class Token
   end
 
   def value
-  	@token["AuthToken"]["__content__"]
+  	@token["AuthToken"]["__content__"] rescue nil
   end
 
   def api_server
-		@token["ServerPaths"]["ServerPath"][0]["__content__"]
+		@token["ServerPaths"]["ServerPath"][0]["__content__"] rescue nil
   end
 
 end
