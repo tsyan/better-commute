@@ -131,7 +131,7 @@ div.info {
 	position: relative;
 	margin: 0 auto;
 	margin-top: 30px;
-	width: 80%;
+	min-width: 80%;
 	font-family: 'Source Sans Pro', sans-serif;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
@@ -159,7 +159,6 @@ div.info_row {
 	display: inline-block;
 	float: left;
 	width: 60%;
-	height: 36px;
 	padding: 5px;
 	padding-top: 10px;
 	text-align: left;
