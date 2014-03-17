@@ -1,5 +1,4 @@
 class Journey < ActiveRecord::Base
-	belongs_to :user
 	has_many :routes
 	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string, :time_can_leave_at_string
 
