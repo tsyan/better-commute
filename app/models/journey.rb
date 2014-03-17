@@ -71,7 +71,7 @@ class Journey < ActiveRecord::Base
 
 		inrix_query.get_all_routes.each do |route|
 			departure_time = Chronic.parse(route["departureTime"])
-			if route["averageSpeed"] == "0"
+			if route["averageSpeed"] == "0" # if route has closures
 				travel_time = nil
 				arrival_time = nil
 			else

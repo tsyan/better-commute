@@ -1,5 +1,4 @@
 class Location
-	include HTTParty
 
 	attr_accessor :geocode, :address, :coordinates
 
@@ -29,8 +28,6 @@ class Location
 		geocode = Rails.cache.fetch(["origin geocode", search_url], expires_in: 1.week) do
 			HTTParty.get(URI.encode(search_url))["results"][0]
 		end
-		return if geocode.blank?
-		geocode
 	end
 
 end
