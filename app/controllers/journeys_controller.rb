@@ -8,7 +8,7 @@ class JourneysController < ApplicationController
 		@journey = Journey.new(journey_params)
 
 		if !@journey.save
-			flash.now[:error] = "Oops! Please fill in all fields and try again."
+			flash.now[:error] = "Oops! Please check your entries and try again."
 			render :new
 			return
 		end

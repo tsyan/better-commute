@@ -4,6 +4,14 @@ class Journey < ActiveRecord::Base
 	validates_presence_of :time_must_arrive_by_string, unless: :time_can_leave_at?
 	validates_presence_of :time_can_leave_at_string, unless: :time_must_arrive_by?
 
+	validate :times
+
+	def times
+		if self.time_can_leave_at.present? && self.time_must_arrive_by.present?
+			errors.add(:base, "nope")
+		end
+	end
+
 	# defines origin_string so that it can pre-populate form fields when reloading form
 	def origin_string
 		@origin_input
