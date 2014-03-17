@@ -11,10 +11,17 @@
 			<div class="info_desc"><%= @journey.destination_address %></div>
 		</div>
 
-		<div class="info_row">
-			<div class="info_label">Arriving By: </div>
-			<div class="info_desc"><%= @journey.time_must_arrive_by.strftime("%l:%M %P on %A, %b %-d") %></div>
-		</div>
+		<% if @journey.time_must_arrive_by.present? %>
+			<div class="info_row">
+				<div class="info_label">Arriving By: </div>
+				<div class="info_desc"><%= @journey.time_must_arrive_by.strftime("%l:%M %P on %A, %b %-d") %></div>
+			</div>
+		<% elsif @journey.time_can_leave_at.present? %>
+			<div class="info_row">
+				<div class="info_label">Leaving At: </div>
+				<div class="info_desc"><%= @journey.time_can_leave_at.strftime("%l:%M %P on %A, %b %-d") %></div>
+			</div>
+		<% end %>
 
 	</span>
 </div>

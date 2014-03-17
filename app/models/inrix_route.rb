@@ -1,18 +1,25 @@
 class InrixRoute
 
-	attr_accessor :route_id, :first_departure_time, :directions, :time_must_arrive_by
+	attr_accessor :route_id, :first_departure_time, :directions, :time_must_arrive_by, :time_can_leave_at
 
-	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
+	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by, time_can_leave_at)
 
-		@token = Token.new rescue nil
+		@token = Token.new
 		@origin_coordinates = origin_coordinates
 		@destination_coordinates = destination_coordinates
-		@time_must_arrive_by = time_must_arrive_by
 		@count = 8 # to be used later in get_all_routes url
 		@interval = 15 # to be used later in get_all_routes url
-		@route_id = get_route_id rescue nil # private method
-		@first_departure_time = get_first_departure_time rescue nil # private method
-		@directions = get_directions rescue nil
+		@route_id = get_route_id  # private method
+		@directions = get_directions
+
+		if time_must_arrive_by.present?
+			@time_specifier = "ArrivalTime=#{time_must_arrive_by.iso8601}"
+			@time_must_arrive_by = time_must_arrive_by
+			@first_departure_time = get_first_departure_time  # private method
+		elsif time_can_leave_at.present?
+			@time_specifier = "DepartureTime=#{time_can_leave_at.iso8601}"
+			@first_departure_time = time_can_leave_at
+		end
 
 	end
 
@@ -30,7 +37,7 @@ class InrixRoute
 	private
 
 	def get_route_id
-		find_route_url = "#{@token.api_server}?Action=FindRoute&Token=#{@token.value}&wp_1=#{@origin_coordinates}&wp_2=#{@destination_coordinates}&ArrivalTime=#{@time_must_arrive_by.iso8601}&UseTraffic=false"
+		find_route_url = "#{@token.api_server}?Action=FindRoute&Token=#{@token.value}&wp_1=#{@origin_coordinates}&wp_2=#{@destination_coordinates}&#{@time_specifier}&UseTraffic=false"
 		@find_route_response = HTTParty.get(URI.encode(find_route_url))["Inrix"]["Trip"]
 		route_id = @find_route_response["Route"]["id"]
 	end

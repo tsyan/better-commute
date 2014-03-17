@@ -76,7 +76,7 @@ class Journey < ActiveRecord::Base
 	end
 
 	def generate_routes
-		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by)
+		inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.time_can_leave_at)
 
 		return if !inrix_query.route_id || !inrix_query.directions || !inrix_query.first_departure_time
 
