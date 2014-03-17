@@ -16,7 +16,11 @@
 	<% if flash[:error].present? %>
 		<div class="flash_error">
 			<p><%= flash[:error] %></p>
-      <p><%= @journey.errors.messages[:base].first %></p>
+      <% @journey.errors.messages.each do |attribute, message| %>
+        <% if message[0].present? %>
+          <p><%= message[0] %></p>
+        <% end %>
+      <% end %>
 		</div>
 	<% end %>
 
