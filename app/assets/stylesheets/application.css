@@ -53,7 +53,7 @@ div.input_form {
 	display: block;	/* same as default, leave just in case */
 	overflow: auto; /* makes height expand with content */
 	margin: 0 auto; /* centers form on page */
-	max-width: 600px;
+	max-width: 750px;
 	min-width: 40%; /* relative to parent div */
 	padding: 25px 25px 0px 25px; /* internal padding of form, set bottom value on .input_row */
 	margin-top: 30px;
@@ -67,7 +67,7 @@ div.input_form {
 
 div.input_row {
 	display: block; /* makes row takes up full width of form */
-	overflow: auto; /* makes height expand with content */
+	overflow: hidden; /* makes height expand with content */
 	width: 100%; /* relative to form */
 	margin-bottom: 25px; /* should be same as form padding */
 	padding: 0; /* for better scaling, don't do internal padding within a row */
@@ -114,7 +114,8 @@ input[type=submit] {
 }
 
 div.flash_error {
-	max-width: 400px;
+	max-width: 450px;
+	min-width: 33%;
 	margin: 0 auto;
 	margin-top: 20px;
 	margin-bottom: 10px;
@@ -125,6 +126,16 @@ div.flash_error {
 	font-size: 18px;
 	text-align: center;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+div.flash_error p {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 16px;
+}
+
+div.flash_error p:last-child {
+	margin-bottom: 0;
 }
 
 span.info {

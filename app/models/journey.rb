@@ -1,14 +1,14 @@
 class Journey < ActiveRecord::Base
 	has_many :routes
 	validates_presence_of :origin_string, :destination_string
-	validates_presence_of :time_must_arrive_by_string, unless: :time_can_leave_at?
-	validates_presence_of :time_can_leave_at_string, unless: :time_must_arrive_by?
-
 	validate :times
 
 	def times
-		if self.time_can_leave_at.present? && self.time_must_arrive_by.present?
-			errors.add(:base, "nope")
+		if self.time_can_leave_at_string.present? && self.time_can_leave_at_string.present?
+			errors.add(:base, "You can only enter one time.")
+		end
+		if self.time_can_leave_at.blank? && self.time_must_arrive_by.blank?
+			errors.add(:base, "You have to enter a time.")
 		end
 	end
 
@@ -59,6 +59,7 @@ class Journey < ActiveRecord::Base
 			# if arrival time is far in the past, leave as nil to trigger validator
 			if parsed_time - Time.now < -86400
 				parsed_time = nil
+				errors.add(:base, "Time must be in the future")
 			# if arrival time is less than 24 hours ago, add one day (handles inputs like '4pm' when it's already 5pm)
 			elsif parsed_time - Time.now < 0 && parsed_time - Time.now > -86400
 				parsed_time = parsed_time + 86400
@@ -75,7 +76,7 @@ class Journey < ActiveRecord::Base
 
 	# defines time_can_leave_at_string so that it can pre-populate form fields when reloading form
 	def time_can_leave_at_string
-		@time_can_leave_at_input
+		@time_can_leave_at_input unless self.time_can_leave_at.present? && self.time_must_arrive_by.present?
 	end
 
 	# defines time_can_leave_at from user input and stores it in the database
@@ -98,6 +99,7 @@ class Journey < ActiveRecord::Base
 		if self.time_can_leave_at = parsed_time
 			@time_can_leave_at_input = user_input
 		end
+
 	end
 
 	def generate_routes
