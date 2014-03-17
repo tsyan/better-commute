@@ -46,14 +46,22 @@ class Journey < ActiveRecord::Base
 	def time_must_arrive_by_string=(user_input)
 		parsed_time = Chronic.parse(user_input.to_s, now: Time.now)
 
-		if parsed_time == nil || parsed_time - Time.now < -86400
-			return
-		elsif parsed_time - Time.now < 0 && parsed_time - Time.now > -86400
-			parsed_time = parsed_time + 86400
+		begin
+			# if arrival time is far in the past, leave as nil to trigger validator
+			if parsed_time - Time.now < -86400
+				parsed_time = nil
+			# if arrival time is less than 24 hours ago, add one day (handles inputs like '4pm' when it's already 5pm)
+			elsif parsed_time - Time.now < 0 && parsed_time - Time.now > -86400
+				parsed_time = parsed_time + 86400
+			end
+		rescue
+			parsed_time = nil
 		end
 
-		self.time_must_arrive_by = parsed_time
-		@time_must_arrive_by_input = user_input
+		# save user input only if user input was parsed correctly, else triggers validator and reloads form
+		if self.time_must_arrive_by = parsed_time
+			@time_must_arrive_by_input = user_input
+		end
 	end
 
 	def generate_routes
@@ -74,6 +82,7 @@ class Journey < ActiveRecord::Base
 		end
 
 		self.update(directions: inrix_query.directions)
+		self.update(time_must_arrive_by: inrix_query.time_must_arrive_by)
 
 	end
 

@@ -1,7 +1,7 @@
 class InrixRoute
 	include HTTParty
 
-	attr_accessor :route_id, :first_departure_time, :directions
+	attr_accessor :route_id, :first_departure_time, :directions, :time_must_arrive_by
 
 	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
 
@@ -38,15 +38,14 @@ class InrixRoute
 
 	def get_first_departure_time
 		departure_url = "#{@token.api_server}?Action=GetRouteTravelTimes&Token=#{@token.value}&RouteID=#{@route_id}&ArrivalTime=#{@time_must_arrive_by.iso8601}&TravelTimeCount=1&TravelTimeInterval=1"
-		last_departure_travel_time = HTTParty.get(URI.encode(departure_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]["travelTimeMinutes"].to_i rescue nil
-		return if !last_departure_travel_time
+		last_departure_travel_time = HTTParty.get(URI.encode(departure_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]["travelTimeMinutes"].to_i rescue nil # if route has closures, this returns 0, not nil
+		return if last_departure_travel_time == 0
 		first_departure_time = (@time_must_arrive_by - 60*last_departure_travel_time) - ((@count-1) * 60*@interval)
-		# make sure first departure is in the future (if it's not, add the correct number of days)
-		if first_departure_time - Time.now < 0
-			first_departure_time + 86400 * ((first_departure_time - Time.now)/(-86400)).ceil
-		else
-			first_departure_time
-		end
+		# make sure first departure is in the future (if it's not, add the correct number of days and update arrival day accordingly)
+		extra_days = 86400 * ((first_departure_time - Time.now)/(-86400)).ceil # is 0 if no extra days are needed
+		first_departure_time = first_departure_time + extra_days
+		@time_must_arrive_by = @time_must_arrive_by + extra_days
+		first_departure_time
 	end
 
 end
