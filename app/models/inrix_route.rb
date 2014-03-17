@@ -11,7 +11,7 @@ class InrixRoute
 		@count = 8 # to be used later in get_all_routes url
 		@interval = 15 # to be used later in get_all_routes url
 		@route_id = get_route_id rescue nil # private method
-		@first_departure_time = get_first_departure_time rescue nil # private method
+		@first_departure_time = get_first_departure_time  # private method
 		@directions = get_directions rescue nil
 
 	end
@@ -38,13 +38,16 @@ class InrixRoute
 	def get_first_departure_time
 		departure_url = "#{@token.api_server}?Action=GetRouteTravelTimes&Token=#{@token.value}&RouteID=#{@route_id}&ArrivalTime=#{@time_must_arrive_by.iso8601}&TravelTimeCount=1&TravelTimeInterval=1"
 		last_departure_travel_time = HTTParty.get(URI.encode(departure_url))["Inrix"]["Trip"]["Route"]["TravelTimes"]["TravelTime"]["travelTimeMinutes"].to_i
+
 		return if last_departure_travel_time == 0 # if route has closures
 		first_departure_time = (@time_must_arrive_by - 60*last_departure_travel_time) - ((@count-1) * 60*@interval)
 
 		# make sure first departure and arrival time are in the future (if not, add the correct number of days)
-		extra_days = 86400 * ((first_departure_time - Time.now)/(-86400)).ceil # is 0 if no extra days are needed
-		first_departure_time = first_departure_time + extra_days
-		@time_must_arrive_by = @time_must_arrive_by + extra_days
+		if first_departure_time - Time.now < 0
+			extra_time = 86400 * ((first_departure_time - Time.now)/(-86400)).ceil # is 0 if no extra days are needed
+			first_departure_time = first_departure_time + extra_time
+			@time_must_arrive_by = @time_must_arrive_by + extra_time
+		end
 
 		first_departure_time
 	end
