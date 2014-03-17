@@ -4,14 +4,14 @@ class InrixRoute
 
 	def initialize(origin_coordinates, destination_coordinates, time_must_arrive_by)
 
-		@token = Token.new
+		@token = Token.new rescue nil
 		@origin_coordinates = origin_coordinates
 		@destination_coordinates = destination_coordinates
 		@time_must_arrive_by = time_must_arrive_by
 		@count = 8 # to be used later in get_all_routes url
 		@interval = 15 # to be used later in get_all_routes url
 		@route_id = get_route_id rescue nil # private method
-		@first_departure_time = get_first_departure_time  # private method
+		@first_departure_time = get_first_departure_time rescue nil # private method
 		@directions = get_directions rescue nil
 
 	end

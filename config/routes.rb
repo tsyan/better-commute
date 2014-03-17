@@ -1,11 +1,12 @@
 BetterCommute::Application.routes.draw do
 
-  resources :users
+  root 'journeys#new'
 
-  resources :journeys do
-    resources :routes
+  resources :journeys, only: [:new, :create, :show] do
+    resources :routes, only: [:index]
   end
 
-  root 'journeys#new'
+  patch 'journeys/:id' => 'journeys#create'
+  put 'journeys/:id' => 'journeys#create'
 
 end
