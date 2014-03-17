@@ -9,7 +9,7 @@ class Journey < ActiveRecord::Base
 		@origin_input
 	end
 
-	# defines origin_coordinates and origin_address from user input and stores them in the database
+	# defines origin_coordinates and origin_address from user input and stores it in the database
 	def origin_string=(user_input)
 		origin = Location.new(user_input)
 		self.origin_address = origin.address
@@ -26,7 +26,7 @@ class Journey < ActiveRecord::Base
 		@destination_input
 	end
 
-	# defines destination_coordinates and destination_address from user input and stores them in the database
+	# defines destination_coordinates and destination_address from user input and stores it in the database
 	def destination_string=(user_input)
 		destination = Location.new(user_input)
 		self.destination_address = destination.address
@@ -43,7 +43,7 @@ class Journey < ActiveRecord::Base
 		@time_must_arrive_by_input
 	end
 
-	# defines time_must_arrive_by from user input and stores them in the database
+	# defines time_must_arrive_by from user input and stores it in the database
 	def time_must_arrive_by_string=(user_input)
 		parsed_time = Chronic.parse(user_input.to_s, now: Time.now)
 
@@ -65,14 +65,31 @@ class Journey < ActiveRecord::Base
 		end
 	end
 
+	# defines time_can_leave_at_string so that it can pre-populate form fields when reloading form
 	def time_can_leave_at_string
 		@time_can_leave_at_input
 	end
 
+	# defines time_can_leave_at from user input and stores it in the database
 	def time_can_leave_at_string=(user_input)
 		parsed_time = Chronic.parse(user_input.to_s, now: Time.now)
-		self.time_can_leave_at = parsed_time
-		@time_can_leave_at_input = user_input
+
+		begin
+			# if departure time is far in the past, leave as nil to trigger validator
+			if parsed_time - Time.now < -86400
+				parsed_time = nil
+			# if departure time is less than 24 hours ago, add one day (handles inputs like '4pm' when it's already 5pm)
+			elsif parsed_time - Time.now < 0 && parsed_time - Time.now > -86400
+				parsed_time = parsed_time + 86400
+			end
+		rescue
+			parsed_time = nil
+		end
+
+		# save user input only if user input was parsed correctly, else triggers validator and reloads form
+		if self.time_can_leave_at = parsed_time
+			@time_can_leave_at_input = user_input
+		end
 	end
 
 	def generate_routes
