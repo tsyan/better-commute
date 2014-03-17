@@ -1,6 +1,8 @@
 class Journey < ActiveRecord::Base
 	has_many :routes
-	validates_presence_of :origin_string, :destination_string, :time_must_arrive_by_string, :time_can_leave_at_string
+	validates_presence_of :origin_string, :destination_string
+	validates_presence_of :time_must_arrive_by_string, unless: :time_can_leave_at?
+	validates_presence_of :time_can_leave_at_string, unless: :time_must_arrive_by?
 
 	# defines origin_string so that it can pre-populate form fields when reloading form
 	def origin_string
