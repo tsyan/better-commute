@@ -9,8 +9,10 @@ class Location
 		@coordinates = get_coordinates rescue nil
 	end
 
-	def get_address
-		formatted_address = @geocode["formatted_address"].gsub(/, USA/,"")
+	def get_address # returns nil if address is outside of USA or Canada
+		if @geocode["formatted_address"].include?("USA" || "CA")
+			formatted_address = @geocode["formatted_address"].gsub(/, USA/,"")
+		end
 	end
 
 	def get_coordinates

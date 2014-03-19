@@ -31,12 +31,10 @@ class Journey < ActiveRecord::Base
 	end
 
 	def generate_routes
-
 		query = new_inrix_query
 		Route.create_all_routes(self.id, query.all_routes)
 		save_directions(query.directions)
 		update_time_must_arrive_by(query.time_must_arrive_by)
-
 	end
 
 	private
@@ -49,11 +47,11 @@ class Journey < ActiveRecord::Base
 
 	def address_geocoding # only triggered if both inputs exist
 		if self.origin_address.blank? || self.destination_address.blank? # if both are blank, displays only one error message
-			errors.add(:origin_address, "You have to enter a valid address (anything Google Maps knows).")
+			errors.add(:origin_address, "You have to enter two valid addresses.")
 		end
 	end
 
-	def uniqueness_and_parsing_of_time_input
+	def uniqueness_and_parsing_of_time_input # if both inputs are invalid, shows only one error to avoid duplication
 		if self.time_can_leave_at_string.present? && self.time_must_arrive_by_string.present? # if user entered both
 			errors.add(:time_can_leave_at_string, "You can only enter one time constraint.")
 		elsif self.time_can_leave_at_string.blank? && self.time_must_arrive_by_string.blank? # if user entered neither
