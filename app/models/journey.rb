@@ -3,7 +3,7 @@ class Journey < ActiveRecord::Base
 
 	attr_accessor :origin_string, :destination_string, :time_must_arrive_by_string, :time_can_leave_at_string
 	validate :presence_of_address_inputs, :uniqueness_and_parsing_of_time_input
-	validates :time_must_arrive_by, :time_can_leave_at, time: true
+	validates :time_must_arrive_by, :time_can_leave_at, time: true # app/validators/time_validator.rb
 	validate :address_geocoding
 
 	def origin_string=(user_input)
@@ -32,30 +32,10 @@ class Journey < ActiveRecord::Base
 
 	def generate_routes
 
-		# call to the api
-		inrix_query
-		something = inrix_query.get_all_routes
-
-
-		begin
-
-			something.each do |route|
-				departure_time = Chronic.parse(route["departureTime"])
-				if route["averageSpeed"] == "0" # if route has closures
-					travel_time = nil
-					arrival_time = nil
-				else
-					travel_time = route["travelTimeMinutes"]
-					arrival_time = departure_time + 60*travel_time.to_i
-				end
-				self.routes.create(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time)
-			end
-
-		# rescue nil
-		end
-
-		save_directions(inrix_query.directions)
-		save_time_must_arrive_by(inrix_query.time_must_arrive_by)
+		query = new_inrix_query
+		Route.create_all_routes(self.id, query.all_routes)
+		save_directions(query.directions)
+		update_time_must_arrive_by(query.time_must_arrive_by)
 
 	end
 
@@ -85,7 +65,7 @@ class Journey < ActiveRecord::Base
 		end
 	end
 
-	def inrix_query
+	def new_inrix_query
 		InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.time_can_leave_at)
 	end
 
@@ -93,7 +73,7 @@ class Journey < ActiveRecord::Base
 		self.update(directions: new_directions)
 	end
 
-	def save_time_must_arrive_by(new_time_must_arrive_by)
+	def update_time_must_arrive_by(new_time_must_arrive_by)
 		self.update(time_must_arrive_by: new_time_must_arrive_by)
 	end
 
