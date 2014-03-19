@@ -32,10 +32,14 @@ class Journey < ActiveRecord::Base
 
 	def generate_routes
 
-		begin
-			inrix_query = InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.time_can_leave_at)
+		# call to the api
+		inrix_query
+		something = inrix_query.get_all_routes
 
-			inrix_query.get_all_routes.each do |route|
+
+		begin
+
+			something.each do |route|
 				departure_time = Chronic.parse(route["departureTime"])
 				if route["averageSpeed"] == "0" # if route has closures
 					travel_time = nil
@@ -47,10 +51,11 @@ class Journey < ActiveRecord::Base
 				self.routes.create(journey_id: self.id, departure_time: departure_time, arrival_time: arrival_time, travel_time: travel_time)
 			end
 
-			self.update(directions: inrix_query.directions)
-			self.update(time_must_arrive_by: inrix_query.time_must_arrive_by)
-		rescue nil
+		# rescue nil
 		end
+
+		save_directions(inrix_query.directions)
+		save_time_must_arrive_by(inrix_query.time_must_arrive_by)
 
 	end
 
@@ -78,6 +83,18 @@ class Journey < ActiveRecord::Base
 		elsif self.time_must_arrive_by_string.present? && self.time_must_arrive_by.blank? # if user entered gibberish
 			errors.add(:time_must_arrive_by, "You have to enter a valid time and/or date.")
 		end
+	end
+
+	def inrix_query
+		InrixRoute.new(self.origin_coordinates, self.destination_coordinates, self.time_must_arrive_by, self.time_can_leave_at)
+	end
+
+	def save_directions(new_directions)
+		self.update(directions: new_directions)
+	end
+
+	def save_time_must_arrive_by(new_time_must_arrive_by)
+		self.update(time_must_arrive_by: new_time_must_arrive_by)
 	end
 
 end
