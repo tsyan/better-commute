@@ -18,6 +18,7 @@ class InrixRoute
 			@time_specifier = "ArrivalTime=#{time_must_arrive_by.iso8601}"
 			@time_must_arrive_by = time_must_arrive_by
 			@first_departure_time = get_first_departure_time
+			ensure_departure_and_arrival_are_in_future
 		elsif time_can_leave_at.present?
 			@time_specifier = "DepartureTime=#{time_can_leave_at.iso8601}"
 			@first_departure_time = time_can_leave_at
@@ -51,16 +52,14 @@ class InrixRoute
 	def get_first_departure_time
 		return if @travel_time == 0 # if route has closures
 		first_departure_time = (@time_must_arrive_by - 60*@travel_time) - ((@count-1) * 60*@interval)
+	end
 
-		# make sure first departure and arrival time are in the future (if not, add the correct number of days)
-		if first_departure_time - Time.now < 3601
+	def ensure_departure_and_arrival_are_in_future
+		if @first_departure_time - Time.now < -3601
 			extra_time = 86400 * ((first_departure_time - Time.now)/(-86400)).ceil # is 0 if no extra days are needed
 			@time_must_arrive_by = @time_must_arrive_by + extra_time
-			first_departure_time = first_departure_time + extra_time
+			@first_departure_time = @first_departure_time + extra_time
 		end
-
-		first_departure_time
-
 	end
 
 	def get_all_routes
