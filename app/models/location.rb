@@ -19,7 +19,7 @@ class Location
 	end
 
 	def get_address # returns nil if address is outside of USA or Canada
-		if @geocode["formatted_address"].include?("USA" || "CA")
+		if @geocode["formatted_address"].match(/USA|CA|Canada/)
 			formatted_address = @geocode["formatted_address"].gsub(/, USA/,"")
 		end
 	end
